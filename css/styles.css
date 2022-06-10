@@ -17,6 +17,9 @@ header.navigation > h3 {
   font-size: 30px;
 }
 
-header.navigation > i.fas.fa-home {
+header.navigation > i {
   font-size: 24px;
+  position: absolute;
+  left: 25px;
+  top: 25px;
 }
