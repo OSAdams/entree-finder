@@ -1,6 +1,24 @@
+main {
+  display: flex;
+  justify-content: center;
+  padding-top: center;
+}
+
 div.main-container {
   width: 100vw;
   height: 100vh;
+}
+
+header.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media screen and (min-width: 768px) {
