@@ -1,0 +1,10 @@
+div.main-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+@media screen and (min-width: 768px) {
+  div.main-container {
+    width: 700px;
+  }
+}

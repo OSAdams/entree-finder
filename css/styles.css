@@ -1,0 +1,22 @@
+header.navigation {
+  background-color: #243a73;
+  width: 100%;
+  position: sticky;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f0f0f0;
+}
+
+header.navigation > h3 {
+  font-family:
+    "Playfair Display",
+    serif;
+  font-weight: 500;
+  font-size: 30px;
+}
+
+header.navigation > i.fas.fa-home {
+  font-size: 24px;
+}
