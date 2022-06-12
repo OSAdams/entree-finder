@@ -45,3 +45,7 @@ p.instruction {
 input.search-input {
   width: 280px;
 }
+
+button.def-button {
+  background-color: #243a73;
+}
