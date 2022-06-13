@@ -1,3 +1,9 @@
+* {
+  font-family:
+    Montserrat,
+    serif;
+}
+
 div.main-container {
   background-color: #f2ebe9;
 }
@@ -31,7 +37,6 @@ main {
 
 section.search-container {
   width: 310px;
-  font-family: Montserrat, serif;
   font-weight: 600;
   color: #090909;
 }
@@ -42,10 +47,23 @@ p.instruction {
   line-height: 30px;
 }
 
+button.def-button,
 input.search-input {
+  height: 35px;
   width: 280px;
+  background-color: #243a73;
+  border-radius: 3px;
+  border: none;
+  color: #f0f0f0;
 }
 
-button.def-button {
-  background-color: #243a73;
+input.search-input {
+  background-color: #a5becc;
+  margin-bottom: 15px;
+  padding-left: 15px;
+}
+
+::placeholder {
+  color: #090909;
+  font-weight: 500;
 }

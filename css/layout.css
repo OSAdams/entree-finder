@@ -21,6 +21,15 @@ form.search-form {
   align-items: center;
 }
 
+p.instruction {
+  margin-bottom: 35px;
+}
+
+button.def-button {
+  height: 35px;
+  width: 285px;
+}
+
 @media screen and (min-width: 768px) {
   div.main-container {
     width: 700px;
