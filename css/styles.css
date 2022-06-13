@@ -60,10 +60,10 @@ input.search-input {
 input.search-input {
   background-color: #a5becc;
   margin-bottom: 15px;
-  padding-left: 15px;
+  padding-left: 10px;
 }
 
 ::placeholder {
   color: #090909;
-  font-weight: 500;
+  font-weight: 600;
 }

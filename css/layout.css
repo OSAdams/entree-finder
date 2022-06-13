@@ -15,19 +15,14 @@ header.navigation {
   align-items: center;
 }
 
-form.search-form {
+section.search-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 p.instruction {
-  margin-bottom: 35px;
-}
-
-button.def-button {
-  height: 35px;
-  width: 285px;
+  margin-bottom: 25px;
 }
 
 @media screen and (min-width: 768px) {
