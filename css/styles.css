@@ -61,9 +61,17 @@ input.search-input {
   background-color: #a5becc;
   margin-bottom: 15px;
   padding-left: 10px;
+  color: #090909;
+  font-weight: 600;
 }
 
 ::placeholder {
   color: #090909;
   font-weight: 600;
+}
+
+button.def-button,
+input.search-input,
+i.fas.fa-home {
+  cursor: pointer;
 }
