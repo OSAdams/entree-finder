@@ -25,17 +25,33 @@ p.instruction {
   margin-bottom: 25px;
 }
 
+div.recipe-list {
+  width: 310px;
+  height: 110px;
+}
+
+div.recipe-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+div.recipe-context {
+  margin-left: 20px;
+}
+
+div.recipe-context > p:nth-child(2) {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 @media screen and (min-width: 768px) {
   body {
-    background-color: #b6b6b6;
     display: flex;
     justify-content: center;
   }
 
   div.main-container {
     width: 700px;
-    box-shadow:
-      0 10px 20px rgba(0, 0, 0, 0.19),
-      0 6px 6px rgba(0, 0, 0, 0.23);
   }
 }

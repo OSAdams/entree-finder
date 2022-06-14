@@ -29,3 +29,19 @@ function convertSearchString(string) {
   const searchString = string.split(' ').join('+');
   return searchString;
 }
+
+/*
+---------PER 5 RECIPE CARDS------------
+        <div class="recipe-list">
+          <div class="recipe-card">
+            <div class="recipe-img">
+              <img src="https://static7.depositphotos.com/1002351/792/i/950/depositphotos_7926477-stock-photo-new-potato.jpg">
+            </div>
+            <div class="recipe-context">
+              <h3>Title</h3>
+              <p>duration</p>
+              <p>calories</p>
+            </div>
+          </div>
+        </div>
+*/

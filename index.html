@@ -22,7 +22,7 @@
       <h3>Vegan Recipes</h3>
     </header>
     <main>
-      <section class="search-container">
+      <section class="search-container hidden">
         <div class="search-form-container">
           <form class="search-form" id="search-form">
             <p class="instruction">
@@ -33,6 +33,20 @@
             <input class="search-input" type="text" name="keyword" id="keyword" placeholder="Enter one or more keyword(s)!" required>
           </form>
           <button class="def-button" type="submit" form="search-form" value="Submit" id="keyword-search">Find me a recipe!</button>
+        </div>
+      </section>
+      <section class="result-container">
+        <div class="recipe-list">
+          <div class="recipe-card">
+            <div class="recipe-img">
+              <img src="https://static7.depositphotos.com/1002351/792/i/950/depositphotos_7926477-stock-photo-new-potato.jpg">
+            </div>
+            <div class="recipe-context">
+              <h3>Title</h3>
+              <p>duration</p>
+              <p>calories</p>
+            </div>
+          </div>
         </div>
       </section>
     </main>
