@@ -1,7 +1,16 @@
 const searchInput = document.querySelector('.search-input');
 const keywordSearch = document.querySelector('#keyword-search');
+const searchSection = document.querySelector('.search-container');
+const resultSection = document.querySelector('.result-container');
+const homeIcon = document.querySelector('.fas.fa-home');
 
 const searchResult = [];
+
+homeIcon.addEventListener('click', event => {
+  searchSection.className = 'search-container';
+  resultSection.className = 'result-container hidden';
+  window.location.hash = '#home';
+});
 
 keywordSearch.addEventListener('click', event => {
   event.preventDefault();
@@ -9,7 +18,14 @@ keywordSearch.addEventListener('click', event => {
   window.location.hash = '#search=' + convertedString;
   searchRecipes(convertedString);
   searchInput.value = '';
+  searchSection.className = 'search-container hidden';
+  resultSection.className = 'result-container';
 });
+
+function convertSearchString(string) {
+  const searchString = string.split(' ').join('+');
+  return searchString;
+}
 
 function searchRecipes(ingredients) {
   const xhr = new XMLHttpRequest();
@@ -23,11 +39,6 @@ function searchRecipes(ingredients) {
     }
   });
   xhr.send();
-}
-
-function convertSearchString(string) {
-  const searchString = string.split(' ').join('+');
-  return searchString;
 }
 
 /*
