@@ -20,6 +20,7 @@ keywordSearch.addEventListener('click', event => {
   searchInput.value = '';
   searchSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
+  renderRecipeCards(searchResult);
 });
 
 function convertSearchString(string) {
@@ -41,6 +42,47 @@ function searchRecipes(ingredients) {
   xhr.send();
 }
 
+function renderRecipeCards(array) {
+  const recipes = [];
+  for (let i = 0; i < array.length; i++) {
+    recipes.push(array[i]);
+  }
+  // eslint-disable-next-line
+  console.log(recipes);
+  const recipeList = document.createElement('div');
+  recipeList.className = 'recipe-list';
+  const recipeListTwo = document.createElement('div');
+  recipeListTwo.className = 'recipe-list';
+  for (let i = 0; i < recipes.length; i++) {
+    const recipeCard = document.createElement('div');
+    recipeCard.className = 'recipe-card';
+    const recipeImgContainer = document.createElement('div');
+    recipeImgContainer.className = 'recipe-img';
+    const recipeImg = document.createElement('img');
+    recipeImg.setAttribute('src', recipes[i].image);
+    const recipeContext = document.createElement('div');
+    recipeContext.className = 'recipe-context';
+    const recipeTitle = document.createElement('h3');
+    recipeTitle.textContent = recipes[i].title;
+    const recipeDuration = document.createElement('p');
+    recipeDuration.textContent = 'Duration:';
+    const recipeCalories = document.createElement('p');
+    recipeCalories.textContent = 'Calories:';
+    recipeContext.appendChild(recipeTitle);
+    recipeContext.appendChild(recipeDuration);
+    recipeContext.appendChild(recipeCalories);
+    recipeImgContainer.appendChild(recipeImg);
+    recipeCard.appendChild(recipeImgContainer);
+    recipeCard.appendChild(recipeContext);
+    if (i >= 5) {
+      recipeListTwo.appendChild(recipeCard);
+    } else {
+      recipeList.appendChild(recipeCard);
+    }
+  }
+  resultSection.appendChild(recipeList);
+  resultSection.appendChild(recipeListTwo);
+}
 /*
 ---------PER 5 RECIPE CARDS------------
         <div class="recipe-list">
