@@ -37,16 +37,15 @@ function searchRecipes(ingredients) {
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.length; i++) {
       searchResult.push(xhr.response[i]);
+      // eslint-disable-next-line
+      console.log(searchResult);
     }
   });
   xhr.send();
 }
 
 function renderRecipeCards(array) {
-  const recipes = [];
-  for (let i = 0; i < array.length; i++) {
-    recipes.push(array[i]);
-  }
+  const recipes = [array];
   // eslint-disable-next-line
   console.log(recipes);
   const recipeList = document.createElement('div');
@@ -74,10 +73,10 @@ function renderRecipeCards(array) {
     recipeImgContainer.appendChild(recipeImg);
     recipeCard.appendChild(recipeImgContainer);
     recipeCard.appendChild(recipeContext);
-    if (i >= 5) {
-      recipeListTwo.appendChild(recipeCard);
-    } else {
+    if (i < 5) {
       recipeList.appendChild(recipeCard);
+    } else {
+      recipeListTwo.appendChild(recipeCard);
     }
   }
   resultSection.appendChild(recipeList);
