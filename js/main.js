@@ -22,7 +22,6 @@ function searchRecipes(ingredients) {
     searchResult = xhr.response;
   });
   xhr.send();
-  return searchResult;
 }
 
 keywordSearch.addEventListener('click', searchForm);
@@ -40,6 +39,8 @@ function searchForm(event) {
   searchInput.value = '';
   searchSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
+  // eslint-disable-next-line
+  console.log('searchResult value in searchForm function: ', searchResult);
 }
 
 // function recipeResult(arr) {
