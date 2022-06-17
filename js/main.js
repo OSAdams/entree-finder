@@ -4,8 +4,6 @@ const searchSection = document.querySelector('.search-container');
 const resultSection = document.querySelector('.result-container');
 const homeIcon = document.querySelector('.fas.fa-home');
 
-let searchResult = null;
-
 homeIcon.addEventListener('click', event => {
   searchSection.className = 'search-container';
   resultSection.className = 'result-container hidden';
@@ -19,7 +17,9 @@ function searchRecipes(ingredients) {
    '&apiKey=633237cc8f324710afa989c4ba9993f0&includeNutrition=true&number=10&diet=vegan');
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
-    searchResult = xhr.response;
+    const searchResult = xhr.response;
+    // eslint-disable-next-line
+    recipeResult(searchResult);
   });
   xhr.send();
 }
