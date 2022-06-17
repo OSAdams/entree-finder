@@ -83,6 +83,10 @@ i.fas.fa-home {
 div.recipe-card {
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 3px;
+  width: 310px;
+  height: 110px;
+  margin-bottom: 20px;
+  padding: 0 10px;
 }
 
 div.recipe-img {
@@ -95,14 +99,14 @@ div.recipe-img > img {
   height: 100%;
 }
 
-div.recipe p {
+div.recipe-context h3 {
   font-weight: 600;
-  font-size: 25px;
+  font-size: 12px;
 }
 
-div.recipe h4 {
+div.recipe-context p {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 @media screen and (min-width: 768px) {

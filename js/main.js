@@ -3,6 +3,8 @@ const keywordSearch = document.querySelector('#keyword-search');
 const searchSection = document.querySelector('.search-container');
 const resultSection = document.querySelector('.result-container');
 const homeIcon = document.querySelector('.fas.fa-home');
+// eslint-disable-next-line
+let searchData = null;
 
 homeIcon.addEventListener('click', event => {
   searchSection.className = 'search-container';
@@ -18,7 +20,7 @@ function searchRecipes(ingredients) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
     const searchResult = xhr.response;
-    // eslint-disable-next-line
+    searchData = xhr.response;
     recipeResult(searchResult);
   });
   xhr.send();
@@ -39,48 +41,44 @@ function searchForm(event) {
   searchInput.value = '';
   searchSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
-  // eslint-disable-next-line
-  console.log('searchResult value in searchForm function: ', searchResult);
 }
 
-// function recipeResult(arr) {
-//   console.log(arr);
-//   const recipes = arr;
-//   console.log(recipes);
-//   const recipeList = document.createElement('div');
-//   recipeList.className = 'recipe-list';
-//   const recipeListTwo = document.createElement('div');
-//   recipeListTwo.className = 'recipe-list';
-//   for (let i = 0; i < searchResult.length; i++) {
-//     const recipeCard = document.createElement('div');
-//     recipeCard.className = 'recipe-card';
-//     const recipeImgContainer = document.createElement('div');
-//     recipeImgContainer.className = 'recipe-img';
-//     const recipeImg = document.createElement('img');
-//     recipeImg.setAttribute('src', searchResult[i].image);
-//     const recipeContext = document.createElement('div');
-//     recipeContext.className = 'recipe-context';
-//     const recipeTitle = document.createElement('h3');
-//     recipeTitle.textContent = searchResult[i].title;
-//     const recipeDuration = document.createElement('p');
-//     recipeDuration.textContent = 'Duration:';
-//     const recipeCalories = document.createElement('p');
-//     recipeCalories.textContent = 'Calories:';
-//     recipeContext.appendChild(recipeTitle);
-//     recipeContext.appendChild(recipeDuration);
-//     recipeContext.appendChild(recipeCalories);
-//     recipeImgContainer.appendChild(recipeImg);
-//     recipeCard.appendChild(recipeImgContainer);
-//     recipeCard.appendChild(recipeContext);
-//     if (i < 5) {
-//       recipeList.appendChild(recipeCard);
-//     } else {
-//       recipeListTwo.appendChild(recipeCard);
-//     }
-//   }
-//   resultSection.appendChild(recipeList);
-//   resultSection.appendChild(recipeListTwo);
-// }
+function recipeResult(arr) {
+  const recipes = arr;
+  const recipeList = document.createElement('div');
+  recipeList.className = 'recipe-list';
+  const recipeListTwo = document.createElement('div');
+  recipeListTwo.className = 'recipe-list';
+  for (let i = 0; i < recipes.length; i++) {
+    const recipeCard = document.createElement('div');
+    recipeCard.className = 'recipe-card';
+    const recipeImgContainer = document.createElement('div');
+    recipeImgContainer.className = 'recipe-img';
+    const recipeImg = document.createElement('img');
+    recipeImg.setAttribute('src', recipes[i].image);
+    const recipeContext = document.createElement('div');
+    recipeContext.className = 'recipe-context';
+    const recipeTitle = document.createElement('h3');
+    recipeTitle.textContent = recipes[i].title;
+    const recipeDuration = document.createElement('p');
+    recipeDuration.textContent = 'Duration:';
+    const recipeCalories = document.createElement('p');
+    recipeCalories.textContent = 'Calories:';
+    recipeContext.appendChild(recipeTitle);
+    recipeContext.appendChild(recipeDuration);
+    recipeContext.appendChild(recipeCalories);
+    recipeImgContainer.appendChild(recipeImg);
+    recipeCard.appendChild(recipeImgContainer);
+    recipeCard.appendChild(recipeContext);
+    if (i < 5) {
+      recipeList.appendChild(recipeCard);
+    } else {
+      recipeListTwo.appendChild(recipeCard);
+    }
+  }
+  resultSection.appendChild(recipeList);
+  resultSection.appendChild(recipeListTwo);
+}
 /*
 ---------PER 5 RECIPE CARDS------------
         <div class="recipe-list">
