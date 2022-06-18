@@ -54,8 +54,7 @@ function recipeResult(arr) {
     recipeCard.className = 'recipe-card';
     const recipeImgContainer = document.createElement('div');
     recipeImgContainer.className = 'recipe-img';
-    const recipeImg = document.createElement('img');
-    recipeImg.setAttribute('src', recipes[i].image);
+    recipeImgContainer.style.backgroundImage = 'url(' + recipes[i].image + ')';
     const recipeContext = document.createElement('div');
     recipeContext.className = 'recipe-context';
     const recipeTitle = document.createElement('h3');
@@ -67,7 +66,6 @@ function recipeResult(arr) {
     recipeContext.appendChild(recipeTitle);
     recipeContext.appendChild(recipeDuration);
     recipeContext.appendChild(recipeCalories);
-    recipeImgContainer.appendChild(recipeImg);
     recipeCard.appendChild(recipeImgContainer);
     recipeCard.appendChild(recipeContext);
     if (i < 5) {

@@ -36,9 +36,10 @@ div.recipe-card {
   align-items: center;
 }
 
-div.recipe-context > p:nth-child(2) {
-  padding-top: 10px;
-  padding-bottom: 10px;
+div.recipe-context {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 768px) {
@@ -48,6 +49,10 @@ div.recipe-context > p:nth-child(2) {
   }
 
   div.main-container {
-    width: 700px;
+    width: 768px;
+  }
+
+  section.result-container {
+    display: flex;
   }
 }
