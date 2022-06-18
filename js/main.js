@@ -3,7 +3,7 @@ const keywordSearch = document.querySelector('#keyword-search');
 const searchSection = document.querySelector('.search-container');
 const resultSection = document.querySelector('.result-container');
 const homeIcon = document.querySelector('.fas.fa-home');
-// eslint-disable-next-line
+
 let searchData = null;
 
 homeIcon.addEventListener('click', event => {
@@ -13,6 +13,7 @@ homeIcon.addEventListener('click', event => {
 });
 
 function searchRecipes(ingredients) {
+  searchData = null;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.spoonacular.com/recipes/findByIngredients?ingredients=' +
    ingredients +
@@ -21,9 +22,10 @@ function searchRecipes(ingredients) {
   xhr.addEventListener('load', () => {
     const searchResult = xhr.response;
     searchData = xhr.response;
-    recipeResult(searchResult);
+    renderRecipeCards(searchResult);
   });
   xhr.send();
+  return searchData;
 }
 
 keywordSearch.addEventListener('click', searchForm);
@@ -43,7 +45,8 @@ function searchForm(event) {
   resultSection.className = 'result-container';
 }
 
-function recipeResult(arr) {
+function renderRecipeCards(arr) {
+  resultSection.innerHTML = '';
   const recipes = arr;
   const recipeList = document.createElement('div');
   recipeList.className = 'recipe-list';
@@ -77,18 +80,3 @@ function recipeResult(arr) {
   resultSection.appendChild(recipeList);
   resultSection.appendChild(recipeListTwo);
 }
-/*
----------PER 5 RECIPE CARDS------------
-        <div class="recipe-list">
-          <div class="recipe-card">
-            <div class="recipe-img">
-              <img src="https://static7.depositphotos.com/1002351/792/i/950/depositphotos_7926477-stock-photo-new-potato.jpg">
-            </div>
-            <div class="recipe-context">
-              <h3>Title</h3>
-              <p>duration</p>
-              <p>calories</p>
-            </div>
-          </div>
-        </div>
-*/
