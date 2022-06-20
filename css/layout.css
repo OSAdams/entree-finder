@@ -2,6 +2,8 @@ main {
   display: flex;
   justify-content: center;
   padding-top: center;
+  height: 92%;
+  overflow-y: auto;
 }
 
 div.main-container {
@@ -25,24 +27,19 @@ p.instruction {
   margin-bottom: 25px;
 }
 
-div.recipe-list {
-  width: 310px;
-  height: 110px;
+div.result-container {
+  height: 100vh;
 }
 
 div.recipe-card {
   display: flex;
   align-items: center;
-  padding: 10px;
 }
 
 div.recipe-context {
-  margin-left: 20px;
-}
-
-div.recipe-context > p:nth-child(2) {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 768px) {
@@ -52,6 +49,10 @@ div.recipe-context > p:nth-child(2) {
   }
 
   div.main-container {
-    width: 700px;
+    width: 768px;
+  }
+
+  section.result-container {
+    display: flex;
   }
 }
