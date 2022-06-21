@@ -10,6 +10,7 @@
 
 div.main-container {
   background-color: #f2ebe9;
+  height: 100vh;
 }
 
 header.navigation {
@@ -37,6 +38,7 @@ header.navigation > i {
 
 main {
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 section.search-container {
@@ -79,6 +81,11 @@ input.search-input,
 i.fas.fa-home,
 div.recipe-card {
   cursor: pointer;
+}
+
+section.result-container {
+  width: 100%;
+  height: 100vh;
 }
 
 div.recipe-card {
@@ -126,9 +133,5 @@ div.recipe-context p {
     box-shadow:
       0 10px 20px rgba(0, 0, 0, 0.19),
       0 6px 6px rgba(0, 0, 0, 0.23);
-  }
-
-  section.result-container > div.recipe-list:last-child {
-    margin-left: 30px;
   }
 }

@@ -1,14 +1,6 @@
 main {
   display: flex;
   justify-content: center;
-  padding-top: center;
-  height: 92%;
-  overflow-y: auto;
-}
-
-div.main-container {
-  width: 100vw;
-  height: 100vh;
 }
 
 header.navigation {
@@ -23,12 +15,15 @@ section.search-container {
   align-items: center;
 }
 
-p.instruction {
-  margin-bottom: 25px;
+section.result-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-div.result-container {
-  height: 100vh;
+p.instruction {
+  margin-bottom: 25px;
 }
 
 div.recipe-card {
@@ -42,17 +37,13 @@ div.recipe-context {
   justify-content: space-between;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 800px) {
   body {
     display: flex;
     justify-content: center;
   }
 
   div.main-container {
-    width: 768px;
-  }
-
-  section.result-container {
-    display: flex;
+    width: 800px;
   }
 }
