@@ -48,6 +48,16 @@ function searchForm(event) {
   resultSection.className = 'result-container';
 }
 
+// const recipeInfo = document.querySelector('.recipe-information');
+// const infoContainer = document.querySelector('.info-container');
+// const recipeBlock = document.querySelector('.recipe-block');
+// const infoImage = document.querySelector('.info-image');
+// const infoTitle = document.querySelector('.info-title');
+// const recipeBlockTwo = document.querySelector('.recipe-block-two');
+// const infoSummary = document.querySelector('.info-summary');
+// const infoIngredients = document.querySelector('.info-ingredients');
+// const infoInstructions = document.querySelector('.info-instructions');
+
 function renderRecipeCards(arr) {
   resultSection.innerHTML = '';
   const recipes = arr;
@@ -58,6 +68,9 @@ function renderRecipeCards(arr) {
   for (let i = 0; i < recipes.results.length; i++) {
     const recipeCard = document.createElement('div');
     recipeCard.className = 'recipe-card';
+    recipeCard.setAttribute('recipe-id', recipes.results[i].id);
+    // eslint-disable-next-line
+    console.log(typeof recipes.results[i].id);
     const recipeImgContainer = document.createElement('div');
     recipeImgContainer.className = 'recipe-img';
     recipeImgContainer.style.backgroundImage = 'url(' + recipes.results[i].image + ')';
@@ -74,6 +87,12 @@ function renderRecipeCards(arr) {
     recipeContext.appendChild(recipeCalories);
     recipeCard.appendChild(recipeImgContainer);
     recipeCard.appendChild(recipeContext);
+    recipeCard.addEventListener('click', e => {
+      if (parseInt(e.currentTarget.getAttribute('recipe-id')) === recipes.results[i].id) {
+        // eslint-disable-next-line
+        console.log(recipes.results[i]);
+      }
+    });
     resultSection.appendChild(recipeCard);
   }
 }
