@@ -21,7 +21,8 @@ header.navigation {
   color: #f0f0f0;
 }
 
-header.navigation > h3 {
+header.navigation > h3,
+div.info-title h3 {
   font-family:
     "Playfair Display",
     serif;
@@ -73,7 +74,8 @@ input.search-input {
   font-weight: 600;
 }
 
-::placeholder {
+::placeholder,
+div.info-container {
   color: #090909;
   font-weight: 600;
 }
@@ -123,6 +125,57 @@ div.recipe-context h3 {
 div.recipe-context p {
   font-weight: 400;
   font-size: 12px;
+}
+
+section.recipe-information {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: #f2ebe9;
+}
+
+div.info-container {
+  background-color: #fefefe;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+div.info-image {
+  background-image: url("https://spoonacular.com/recipeImages/661121-312x231.jpg");
+  width: 100%;
+  height: 160px;
+  background-size: 100% 100%;
+  border-radius: 3px;
+}
+
+div.info-title {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+div.info-summary {
+  font-size: 13px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div.info-ingredients {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+div.info-ingredients > ul {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+div.info-ingredients li {
+  margin-top: 5px;
+}
+
+ul > li > span.rec-ingr {
+  font-weight: normal;
 }
 
 @media screen and (min-width: 768px) {

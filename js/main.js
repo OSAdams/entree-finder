@@ -48,7 +48,6 @@ function searchForm(event) {
   resultSection.className = 'result-container';
 }
 
-// const recipeInfo = document.querySelector('.recipe-information');
 // const infoContainer = document.querySelector('.info-container');
 // const recipeBlock = document.querySelector('.recipe-block');
 // const infoImage = document.querySelector('.info-image');
@@ -96,3 +95,29 @@ function renderRecipeCards(arr) {
     resultSection.appendChild(recipeCard);
   }
 }
+
+// <div class="recipe-block">
+//   <div class="info-image">
+
+//   </div>
+//   <div class="info-title">
+//     <h3> </h3>
+//   </div>
+// </div>
+// <div class="recipe-block-two">
+//   <div class="info-summary">
+
+//   </div>
+//   <div class="info-ingredients">
+//     <ul>
+//       <li>
+//         <span class="rec-ingr"> </span>
+//       </li>
+//     </ul>
+//   </div>
+// </div>
+// <div class="recipt-actions">
+//   <div class="info-instructions">
+
+//   </div>
+// </div>
