@@ -35,6 +35,7 @@ keywordSearch.addEventListener('click', searchForm);
 
 function convertSearchString(string) {
   const searchString = string.split(' ').join('+');
+
   return searchString;
 }
 
@@ -49,15 +50,6 @@ function searchForm(event) {
   resultSection.className = 'result-container';
 }
 
-// const infoContainer = document.querySelector('.info-container');
-// const recipeBlock = document.querySelector('.recipe-block');
-// const infoImage = document.querySelector('.info-image');
-// const infoTitle = document.querySelector('.info-title');
-// const recipeBlockTwo = document.querySelector('.recipe-block-two');
-// const infoSummary = document.querySelector('.info-summary');
-// const infoIngredients = document.querySelector('.info-ingredients');
-// const infoInstructions = document.querySelector('.info-instructions');
-
 function renderRecipeCards(arr) {
   resultSection.innerHTML = '';
   const recipes = arr;
@@ -69,8 +61,6 @@ function renderRecipeCards(arr) {
     const recipeCard = document.createElement('div');
     recipeCard.className = 'recipe-card';
     recipeCard.setAttribute('recipe-id', recipes.results[i].id);
-    // eslint-disable-next-line
-    console.log(typeof recipes.results[i].id);
     const recipeImgContainer = document.createElement('div');
     recipeImgContainer.className = 'recipe-img';
     recipeImgContainer.style.backgroundImage = 'url(' + recipes.results[i].image + ')';
@@ -95,6 +85,7 @@ function renderRecipeCards(arr) {
         const infoImage = document.createElement('div');
         const infoTitle = document.createElement('div');
         const titleH3 = document.createElement('h3');
+        const recipeContainer = document.querySelector('.recipe-information');
         recipeBlock.className = 'recipe-block';
         recipeBlockTwo.className = 'recipe-block-two';
         infoImage.className = 'info-image';
@@ -109,7 +100,7 @@ function renderRecipeCards(arr) {
         infoSummary.className = 'info-summary';
         const infoIngredients = document.createElement('div');
         infoIngredients.className = 'info-ingredients';
-        infoSummary.textContent = recipes.results[i].summary;
+        infoSummary.innerHTML = recipes.results[i].summary;
         const infoUL = document.createElement('ul');
         const recipeIngredients = recipes.results[i].nutrition.ingredients.slice();
         for (let i = 0; i < recipeIngredients.length; i++) {
@@ -124,7 +115,10 @@ function renderRecipeCards(arr) {
         recipeBlockTwo.appendChild(infoSummary);
         recipeBlockTwo.appendChild(infoIngredients);
         infoContainer.appendChild(recipeBlockTwo);
-        window.location.hash += convertSearchString(recipes.results[i].title);
+        dataView = 'view-recipe';
+        window.location.hash += convertSearchString('&' + dataView + '?' + recipes.results[i].title);
+        recipeContainer.className = 'recipe-infomation';
+        resultSection.className += ' hidden';
       }
     });
     resultSection.appendChild(recipeCard);
