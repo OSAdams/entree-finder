@@ -3,6 +3,7 @@ const keywordSearch = document.querySelector('#keyword-search');
 const searchSection = document.querySelector('.search-container');
 const resultSection = document.querySelector('.result-container');
 const homeIcon = document.querySelector('.fas.fa-home');
+const recipeSection = document.querySelector('.recipe-information');
 
 let searchData = null;
 let dataView = '';
@@ -10,8 +11,8 @@ let dataView = '';
 homeIcon.addEventListener('click', event => {
   searchSection.className = 'search-container';
   resultSection.className = 'result-container hidden';
-  dataView = 'home';
-  window.location.hash = '#' + dataView;
+  recipeSection.className = 'recipe-information hidden';
+  window.location.hash = '#home' + '?prevSearch&' + dataView;
 });
 
 function searchRecipes(ingredients) {
@@ -80,16 +81,18 @@ function renderRecipeCards(arr) {
     recipeCard.addEventListener('click', e => {
       if (parseInt(e.currentTarget.getAttribute('recipe-id')) === recipes.results[i].id) {
         const infoContainer = document.querySelector('.info-container');
+        const recipeContainer = document.querySelector('.recipe-information');
         const recipeBlock = document.createElement('div');
         const recipeBlockTwo = document.createElement('div');
         const infoImage = document.createElement('div');
         const infoTitle = document.createElement('div');
         const titleH3 = document.createElement('h3');
-        const recipeContainer = document.querySelector('.recipe-information');
+        const ingredientsData = document.createElement('div');
         recipeBlock.className = 'recipe-block';
         recipeBlockTwo.className = 'recipe-block-two';
         infoImage.className = 'info-image';
         infoTitle.className = 'info-title';
+        ingredientsData.className = 'ingredients-data';
         infoImage.style.backgroundImage = 'url(' + recipes.results[i].image + ')';
         titleH3.textContent = recipes.results[i].title;
         infoTitle.appendChild(titleH3);
@@ -98,22 +101,25 @@ function renderRecipeCards(arr) {
         infoContainer.appendChild(recipeBlock);
         const infoSummary = document.createElement('div');
         infoSummary.className = 'info-summary';
-        const infoIngredients = document.createElement('div');
-        infoIngredients.className = 'info-ingredients';
         infoSummary.innerHTML = recipes.results[i].summary;
         const infoUL = document.createElement('ul');
         const recipeIngredients = recipes.results[i].nutrition.ingredients.slice();
+        // eslint-disable-next-line
+        console.log('-------------------recipeIngredients-----------------------')
+        // eslint-disable-next-line
+        console.log(recipeIngredients);
         for (let i = 0; i < recipeIngredients.length; i++) {
           const infoLI = document.createElement('li');
           const ingredientsSpan = document.createElement('span');
           ingredientsSpan.className = 'rec-ingr';
-          ingredientsSpan.textContent = recipeIngredients[i].amount + ' ' + recipeIngredients[i].unit + ':';
-          infoLI.textContent = recipeIngredients[i].name;
+          ingredientsSpan.textContent = recipeIngredients[i].name + ': ';
+          infoLI.textContent = recipeIngredients[i].amount + ' ' + recipeIngredients[i].unit;
           infoLI.appendChild(ingredientsSpan);
           infoUL.appendChild(infoLI);
+          ingredientsData.appendChild(infoUL);
         }
         recipeBlockTwo.appendChild(infoSummary);
-        recipeBlockTwo.appendChild(infoIngredients);
+        recipeBlockTwo.appendChild(ingredientsData);
         infoContainer.appendChild(recipeBlockTwo);
         dataView = 'view-recipe';
         window.location.hash += convertSearchString('&' + dataView + '?' + recipes.results[i].title);
@@ -137,7 +143,7 @@ function renderRecipeCards(arr) {
 //   <div class="info-summary">
 
 //   </div>
-//   <div class="info-ingredients">
+//   <div class="ingredients-data">
 //     <ul>
 //       <li>
 //         <span class="rec-ingr"> </span>
