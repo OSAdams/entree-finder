@@ -37,6 +37,12 @@ div.recipe-context {
   justify-content: space-between;
 }
 
+div.recipe-block,
+div.recipe-block-two {
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (min-width: 800px) {
   body {
     display: flex;
@@ -45,5 +51,16 @@ div.recipe-context {
 
   div.main-container {
     width: 800px;
+  }
+
+  div.recipe-block,
+  div.recipe-block-two {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  div.recipe-block div,
+  div.recipe-block-two div {
+    width: 45%;
   }
 }
