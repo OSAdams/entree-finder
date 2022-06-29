@@ -5,11 +5,12 @@ const resultSection = document.querySelector('.result-container');
 const homeIcon = document.querySelector('.fas.fa-home');
 
 let searchData = null;
-let dataView = 'home';
+let dataView = '';
 
 homeIcon.addEventListener('click', event => {
   searchSection.className = 'search-container';
   resultSection.className = 'result-container hidden';
+  dataView = 'home';
   window.location.hash = '#' + dataView;
 });
 
@@ -88,8 +89,42 @@ function renderRecipeCards(arr) {
     recipeCard.appendChild(recipeContext);
     recipeCard.addEventListener('click', e => {
       if (parseInt(e.currentTarget.getAttribute('recipe-id')) === recipes.results[i].id) {
-        // eslint-disable-next-line
-        console.log(recipes.results[i]);
+        const infoContainer = document.querySelector('.info-container');
+        const recipeBlock = document.createElement('div');
+        const recipeBlockTwo = document.createElement('div');
+        const infoImage = document.createElement('div');
+        const infoTitle = document.createElement('div');
+        const titleH3 = document.createElement('h3');
+        recipeBlock.className = 'recipe-block';
+        recipeBlockTwo.className = 'recipe-block-two';
+        infoImage.className = 'info-image';
+        infoTitle.className = 'info-title';
+        infoImage.style.backgroundImage = 'url(' + recipes.results[i].image + ')';
+        titleH3.textContent = recipes.results[i].title;
+        infoTitle.appendChild(titleH3);
+        recipeBlock.appendChild(infoImage);
+        recipeBlock.appendChild(infoTitle);
+        infoContainer.appendChild(recipeBlock);
+        const infoSummary = document.createElement('div');
+        infoSummary.className = 'info-summary';
+        const infoIngredients = document.createElement('div');
+        infoIngredients.className = 'info-ingredients';
+        infoSummary.textContent = recipes.results[i].summary;
+        const infoUL = document.createElement('ul');
+        const recipeIngredients = recipes.results[i].nutrition.ingredients.slice();
+        for (let i = 0; i < recipeIngredients.length; i++) {
+          const infoLI = document.createElement('li');
+          const ingredientsSpan = document.createElement('span');
+          ingredientsSpan.className = 'rec-ingr';
+          ingredientsSpan.textContent = recipeIngredients[i].amount + ' ' + recipeIngredients[i].unit + ':';
+          infoLI.textContent = recipeIngredients[i].name;
+          infoLI.appendChild(ingredientsSpan);
+          infoUL.appendChild(infoLI);
+        }
+        recipeBlockTwo.appendChild(infoSummary);
+        recipeBlockTwo.appendChild(infoIngredients);
+        infoContainer.appendChild(recipeBlockTwo);
+        window.location.hash += convertSearchString(recipes.results[i].title);
       }
     });
     resultSection.appendChild(recipeCard);
