@@ -121,6 +121,12 @@ function renderRecipeCards(arr) {
         recipeBlockTwo.appendChild(infoSummary);
         recipeBlockTwo.appendChild(ingredientsData);
         infoContainer.appendChild(recipeBlockTwo);
+        const recipeActions = document.createElement('div');
+        recipeActions.className = 'recipe-actions';
+        const infoInstructions = document.createElement('div');
+        infoInstructions.className = 'info-instructions';
+        recipeActions.appendChild(infoInstructions);
+        infoContainer.appendChild(recipeActions);
         dataView = 'view-recipe';
         window.location.hash += convertSearchString('&' + dataView + '?' + recipes.results[i].title);
         recipeContainer.className = 'recipe-infomation';
