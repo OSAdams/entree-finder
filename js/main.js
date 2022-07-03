@@ -125,6 +125,9 @@ function renderRecipeCards(arr) {
         recipeActions.className = 'recipe-actions';
         const infoInstructions = document.createElement('div');
         infoInstructions.className = 'info-instructions';
+        const closeButton = document.createElement('button');
+        closeButton.className = 'close-button';
+        infoInstructions.appendChild(closeButton);
         recipeActions.appendChild(infoInstructions);
         infoContainer.appendChild(recipeActions);
         dataView = 'view-recipe';
