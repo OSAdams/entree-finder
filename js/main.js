@@ -143,29 +143,3 @@ function renderRecipeCards(arr) {
     resultSection.appendChild(recipeCard);
   }
 }
-
-// <div class="recipe-block">
-//   <div class="info-image">
-
-//   </div>
-//   <div class="info-title">
-//     <h3> </h3>
-//   </div>
-// </div>
-// <div class="recipe-block-two">
-//   <div class="info-summary">
-
-//   </div>
-//   <div class="ingredients-data">
-//     <ul>
-//       <li>
-//         <span class="rec-ingr"> </span>
-//       </li>
-//     </ul>
-//   </div>
-// </div>
-// <div class="recipt-actions">
-//   <div class="info-instructions">
-
-//   </div>
-// </div>
