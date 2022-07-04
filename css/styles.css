@@ -57,13 +57,15 @@ p.instruction {
 }
 
 button.def-button,
-input.search-input {
+input.search-input,
+button.close-button {
   height: 35px;
   width: 280px;
   background-color: #243a73;
   border-radius: 3px;
   border: none;
   color: #f0f0f0;
+  cursor: pointer;
 }
 
 input.search-input {
@@ -152,8 +154,6 @@ div.info-image {
 
 div.info-title {
   text-align: center;
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 
 div.info-summary {
@@ -162,9 +162,9 @@ div.info-summary {
   padding-right: 5px;
 }
 
-div.ingredients-data {
-  margin-top: 10px;
-  margin-bottom: 5px;
+div.recipe-block,
+div.recipe-block-two {
+  margin-bottom: 10px;
 }
 
 div.ingredients-data > ul {
@@ -174,10 +174,17 @@ div.ingredients-data > ul {
 
 div.ingredients-data li {
   margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
-ul > li > span.rec-ingr {
+ul > li > span.rec-name {
   font-weight: normal;
+}
+
+button.close-button {
+  width: 130px;
+  height: 30px;
 }
 
 @media screen and (min-width: 768px) {

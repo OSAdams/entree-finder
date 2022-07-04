@@ -104,17 +104,16 @@ function renderRecipeCards(arr) {
         infoSummary.innerHTML = recipes.results[i].summary;
         const infoUL = document.createElement('ul');
         const recipeIngredients = recipes.results[i].nutrition.ingredients.slice();
-        // eslint-disable-next-line
-        console.log('-------------------recipeIngredients-----------------------')
-        // eslint-disable-next-line
-        console.log(recipeIngredients);
         for (let i = 0; i < recipeIngredients.length; i++) {
           const infoLI = document.createElement('li');
-          const ingredientsSpan = document.createElement('span');
-          ingredientsSpan.className = 'rec-ingr';
-          ingredientsSpan.textContent = recipeIngredients[i].name + ': ';
-          infoLI.textContent = recipeIngredients[i].amount + ' ' + recipeIngredients[i].unit;
-          infoLI.appendChild(ingredientsSpan);
+          const ingredientsAmount = document.createElement('span');
+          const ingredientName = document.createElement('span');
+          ingredientsAmount.className = 'rec-ingr';
+          ingredientName.className = 'rec-name';
+          ingredientsAmount.textContent = recipeIngredients[i].amount + ' ' + recipeIngredients[i].unit;
+          ingredientName.textContent = recipeIngredients[i].name + ': ';
+          infoLI.appendChild(ingredientName);
+          infoLI.appendChild(ingredientsAmount);
           infoUL.appendChild(infoLI);
           ingredientsData.appendChild(infoUL);
         }
@@ -127,6 +126,7 @@ function renderRecipeCards(arr) {
         infoInstructions.className = 'info-instructions';
         const closeButton = document.createElement('button');
         closeButton.className = 'close-button';
+        closeButton.textContent = 'Back to List';
         infoInstructions.appendChild(closeButton);
         recipeActions.appendChild(infoInstructions);
         infoContainer.appendChild(recipeActions);
@@ -134,6 +134,10 @@ function renderRecipeCards(arr) {
         window.location.hash += convertSearchString('&' + dataView + '?' + recipes.results[i].title);
         recipeContainer.className = 'recipe-infomation';
         resultSection.className += ' hidden';
+        closeButton.addEventListener('click', e => {
+          resultSection.className = 'result-section';
+          recipeContainer.className += ' hidden';
+        });
       }
     });
     resultSection.appendChild(recipeCard);

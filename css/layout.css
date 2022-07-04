@@ -43,6 +43,12 @@ div.recipe-block-two {
   flex-direction: column;
 }
 
+div.recipe-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (min-width: 800px) {
   body {
     display: flex;
