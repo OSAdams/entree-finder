@@ -102,6 +102,17 @@ function singleCard(type, className, id, bgImage, title, duration) {
   return elementType;
 }
 
+// function renderRecipe(event, array) {
+//   const carID = event.target.id;
+//   const recipeArray = array.results;
+//   for (let i = 0; i < recipeArray.length; i++) {
+//     if (parseInt(carID) === recipeArray[i].id) {
+//       console.log('---------it worked---------');
+//       console.log(recipeArray[i]);
+//     }
+//   }
+// }
+
 keywordSearch.addEventListener('click', searchForm);
 
 // when window hash changes call the renderRecipeCards function with searchData
