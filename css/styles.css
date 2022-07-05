@@ -100,7 +100,8 @@ section.result-container {
   padding-bottom: 10px;
 }
 
-div.result-data-list {
+div.result-data-list,
+div.recipe-data-container {
   width: 100%;
   padding-top: 20px;
 }
