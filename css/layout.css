@@ -9,20 +9,17 @@ header.navigation {
   align-items: center;
 }
 
-section.search-container {
+div.feature-components {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 div.result-data-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-}
-
-p.instruction {
-  margin-bottom: 25px;
 }
 
 div.recipe-card {

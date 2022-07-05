@@ -1,32 +1,35 @@
 const searchInput = document.querySelector('.search-input');
 const keywordSearch = document.querySelector('#keyword-search');
-const searchSection = document.querySelector('.search-container');
+const featureSection = document.querySelector('.feature-container');
 const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
-// const homeIcon = document.querySelector('.fas.fa-home');
+const homeIcon = document.querySelector('.fas.fa-home');
 // const recipeSection = document.querySelector('.recipe-information');
 
 let searchData = null;
 let dataView = '';
+let prevSearch = '';
 
-// homeIcon.addEventListener('click', event => {
-//   searchSection.className = 'search-container';
-//   resultSection.className = 'result-container hidden';
-//   recipeSection.className = 'recipe-information hidden';
-//   window.location.hash = '#home' + '?prevSearch&' + dataView;
-// });
+homeIcon.addEventListener('click', event => {
+  featureSection.className = 'feature-container';
+  resultSection.className = 'result-container hidden';
+  // recipeSection.className = 'recipe-information hidden';
+  window.location.hash = '#home' + '?prev-search&' + prevSearch;
+  searchData = null;
+});
 
 function searchRecipes(ingredients) {
   searchData = null;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
    ingredients +
-   '&number=12&instructionsRequired=true&addRecipeNutrition=true' +
+   '&instructionsRequired=true&addRecipeNutrition=true' +
    '&apiKey=633237cc8f324710afa989c4ba9993f0', false);
   xhr.addEventListener('load', () => {
     searchData = JSON.parse(xhr.response);
   });
   xhr.send();
+  dataView = 'search';
 }
 
 window.addEventListener('hashchange', e => {
@@ -46,8 +49,9 @@ function searchForm(event) {
   searchRecipes(convertedString);
   dataView = 'search';
   window.location.hash = '#search=' + convertedString;
+  prevSearch = convertedString;
   searchInput.value = '';
-  searchSection.className = 'search-container hidden';
+  featureSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
 }
 
@@ -63,7 +67,7 @@ function renderRecipeCards(array) {
       recipeCard: singleCard('div', 'recipe-card', recipes[i].id),
       recipeImg: singleCard('div', 'recipe-img', null, recipes[i].image),
       recipeTitle: singleCard('h3', null, null, null, recipes[i].title),
-      recipeDuration: singleCard('p', null, null, null, null, 'Duration: ' + recipes[i].readyInMinutes + 'minutes'),
+      recipeDuration: singleCard('p', null, null, null, null, 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes'),
       recipeNutrition: singleCard('p', null, null, null, null, 'Calories: ' + recipes[i].nutrition.nutrients[0].amount),
       recipeContext: singleCard('div', 'recipe-context')
     };
