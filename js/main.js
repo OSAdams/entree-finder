@@ -136,7 +136,7 @@ function renderRecipeCards(arr) {
         resultSection.className += ' hidden';
         closeButton.addEventListener('click', e => {
           resultSection.className = 'result-section';
-          recipeContainer.className += ' hidden';
+          recipeContainer.className += ' ' + 'hidden';
         });
       }
     });
