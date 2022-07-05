@@ -129,6 +129,7 @@ div.recipe-context {
   height: 90px;
   width: 200px;
   padding-left: 10px;
+  text-align: right;
 }
 
 div.recipe-context h3 {
