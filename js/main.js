@@ -10,6 +10,10 @@ let searchData = null;
 let dataView = '';
 let prevSearch = '';
 
+// click event listener for the home icon which will
+// update classnames to display the feature component
+// update window location hash to previous search string
+// update searchData to null
 homeIcon.addEventListener('click', event => {
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
@@ -18,6 +22,12 @@ homeIcon.addEventListener('click', event => {
   searchData = null;
 });
 
+// reset searchData variable value to null
+// use argument passed and concatenated to string passed as a second argument
+// on the call of open method of the xhr object
+// when loaded, searchData is assigned to the return value of the call parse method
+// of the JSON object with xhr.response as an argument
+// dataView is updated to 'search' value
 function searchRecipes(ingredients) {
   searchData = null;
   const xhr = new XMLHttpRequest();
@@ -32,17 +42,24 @@ function searchRecipes(ingredients) {
   dataView = 'search';
 }
 
+// when window hash changes call the renderRecipeCards function with searchData
+// as the argument IF
+// searchData is a truthy value and dataView is absolutely equal to 'search'
 window.addEventListener('hashchange', e => {
   if (searchData && dataView === 'search') {
     renderRecipeCards(searchData);
   }
 });
 
+// modify a string taken as the argument
+// assign value to a variable and return variable
 function convertSearchString(string) {
   const searchString = string.split(' ').join('+');
   return searchString;
 }
 
+// take form text value and create a new string which will be used as an argument to
+// the synchronous AJAX call
 function searchForm(event) {
   event.preventDefault();
   const convertedString = convertSearchString(searchInput.value);
@@ -55,13 +72,14 @@ function searchForm(event) {
   resultSection.className = 'result-container';
 }
 
+// create an object and assign value to the properties by calling singleCard func
+// append children with value to newCard
+// append the recipeCards to resultDataList
+// append resultDataList to resultSection
+// render the recipe cards to the dom
 function renderRecipeCards(array) {
   resultSection.innerHTML = '';
   const recipes = array.results;
-  // eslint-disable-next-line
-  console.log('----------------recipes---------------');
-  // eslint-disable-next-line
-  console.log(recipes);
   for (let i = 0; i < recipes.length; i++) {
     const newCard = {
       recipeCard: singleCard('div', 'recipe-card', recipes[i].id),
@@ -81,6 +99,10 @@ function renderRecipeCards(array) {
   }
 }
 
+// function definition with 6 parameters
+// create an element with the first parameter
+// create and update attribute values with remaining parameters
+// return the element value
 function singleCard(type, className, id, bgImage, title, duration) {
   const elementType = document.createElement(type);
   if (className) {
@@ -100,7 +122,7 @@ function singleCard(type, className, id, bgImage, title, duration) {
   }
   return elementType;
 }
-// eslint-disable-next-line
+
 // function PLACEHOLDER(arr) {
 //   for (let i = 0; i < recipes.results.length; i++) {
 //     const recipeCard = document.createElement('div');
