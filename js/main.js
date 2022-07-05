@@ -20,6 +20,7 @@ homeIcon.addEventListener('click', event => {
   // recipeSection.className = 'recipe-information hidden';
   window.location.hash = '#home' + '?prev-search&' + prevSearch;
   searchData = null;
+  dataView = 'home';
 });
 
 // reset searchData variable value to null
