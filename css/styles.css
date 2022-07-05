@@ -16,9 +16,16 @@ div.main-container {
 header.navigation {
   background-color: #243a73;
   width: 100%;
-  position: sticky;
-  height: 70px;
+  height: 9%;
   color: #f0f0f0;
+  position: relative;
+}
+
+header.navigation > i {
+  font-size: 24px;
+  position: absolute;
+  left: 25px;
+  top: 25px;
 }
 
 header.navigation > h3,
@@ -30,18 +37,8 @@ div.info-title h3 {
   font-size: 30px;
 }
 
-header.navigation > i {
-  font-size: 24px;
-  position: absolute;
-  left: 25px;
-  top: 25px;
-}
-
 main {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  height: 90%;
-  overflow-y: scroll;
+  height: 91%;
 }
 
 section.search-container {
@@ -91,6 +88,10 @@ div.recipe-card {
 
 section.result-container {
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 div.recipe-card {

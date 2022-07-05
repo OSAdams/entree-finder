@@ -30,11 +30,7 @@ function searchRecipes(ingredients) {
 }
 
 window.addEventListener('hashchange', e => {
-  if (dataView === window.location.hash) {
-    // eslint-disable-next-line
-    console.log(searchData);
-    // eslint-disable-next-line
-    console.log('----------it worked------------');
+  if (searchData && dataView === 'search') {
     renderRecipeCards(searchData);
   }
 });
@@ -48,8 +44,8 @@ function searchForm(event) {
   event.preventDefault();
   const convertedString = convertSearchString(searchInput.value);
   searchRecipes(convertedString);
-  dataView = '#search=' + convertedString;
-  window.location.hash = dataView;
+  dataView = 'search';
+  window.location.hash = '#search=' + convertedString;
   searchInput.value = '';
   searchSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
