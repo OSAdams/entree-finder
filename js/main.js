@@ -34,7 +34,7 @@ function searchRecipes(ingredients) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
    ingredients +
-   '&instructionsRequired=true&addRecipeNutrition=true' +
+   '&number=100&instructionsRequired=true&addRecipeNutrition=true' +
    '&apiKey=633237cc8f324710afa989c4ba9993f0', false);
   xhr.addEventListener('load', () => {
     searchData = JSON.parse(xhr.response);
