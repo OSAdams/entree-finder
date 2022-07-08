@@ -64,8 +64,8 @@ function renderRecipeCards(array) {
       recipeCard: singleCard('div', 'recipe-card', recipes[i].id),
       recipeImg: singleCard('div', 'recipe-img', null, recipes[i].image),
       recipeTitle: singleCard('h3', null, null, null, recipes[i].title),
-      recipeDuration: singleCard('p', null, null, null, null, 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes'),
-      recipeNutrition: singleCard('p', null, null, null, null, 'Calories: ' + recipes[i].nutrition.nutrients[0].amount),
+      recipeDuration: singleCard('p', null, null, null, 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes'),
+      recipeNutrition: singleCard('p', null, null, null, 'Calories: ' + recipes[i].nutrition.nutrients[0].amount),
       recipeContext: singleCard('div', 'recipe-context')
     };
     newCard.recipeCard.appendChild(newCard.recipeImg);
@@ -82,7 +82,7 @@ function renderRecipeCards(array) {
 // create an element with the first parameter
 // create and update attribute values with remaining parameters
 // return the element value
-function singleCard(type, className, id, bgImage, title, duration) {
+function singleCard(type, className, id, bgImage, content) {
   const elementType = document.createElement(type);
   if (className) {
     elementType.className = className;
@@ -93,11 +93,8 @@ function singleCard(type, className, id, bgImage, title, duration) {
   if (bgImage) {
     elementType.style.backgroundImage = ('url(' + bgImage + ')');
   }
-  if (title) {
-    elementType.textContent = title;
-  }
-  if (duration) {
-    elementType.textContent = duration;
+  if (content) {
+    elementType.textContent = content;
   }
   return elementType;
 }
