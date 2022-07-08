@@ -6,28 +6,24 @@ const resultDataList = document.querySelector('.result-data-list');
 const homeIcon = document.querySelector('.fas.fa-home');
 // const recipeSection = document.querySelector('.recipe-information');
 
-let searchData = null;
-let dataView = '';
-let prevSearch = '';
-
-// reset searchData variable value to null
+// reset data.searchData variable value to null
 // use argument passed and concatenated to string passed as a second argument
 // on the call of open method of the xhr object
-// when loaded, searchData is assigned to the return value of the call parse method
+// when loaded, data.searchData is assigned to the return value of the call parse method
 // of the JSON object with xhr.response as an argument
-// dataView is updated to 'search' value
+// data.dataView is updated to 'search' value
 function searchRecipes(ingredients) {
-  searchData = null;
+  data.searchData = null;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
    ingredients +
    '&number=25&instructionsRequired=true&addRecipeNutrition=true' +
    '&apiKey=633237cc8f324710afa989c4ba9993f0', false);
   xhr.addEventListener('load', () => {
-    searchData = JSON.parse(xhr.response);
+    data.searchData = JSON.parse(xhr.response);
   });
   xhr.send();
-  dataView = 'search';
+  data.dataView = 'search';
 }
 
 // modify a string taken as the argument
@@ -43,9 +39,9 @@ function searchForm(event) {
   event.preventDefault();
   const convertedString = windowHashString(searchInput.value);
   searchRecipes(convertedString);
-  dataView = 'search';
+  data.dataView = 'search';
   window.location.hash = '#search=' + convertedString;
-  prevSearch = convertedString;
+  data.prevSearch = convertedString;
   searchInput.value = '';
   featureSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
@@ -109,24 +105,24 @@ function renderRecipe(event, array) {
 
 keywordSearch.addEventListener('click', searchForm);
 
-// when window hash changes call the renderRecipeCards function with searchData
+// when window hash changes call the renderRecipeCards function with data.searchData
 // as the argument IF
-// searchData is a truthy value and dataView is absolutely equal to 'search'
+// data.searchData is a truthy value and data.dataView is absolutely equal to 'search'
 window.addEventListener('hashchange', e => {
-  if (searchData && dataView === 'search') {
-    renderRecipeCards(searchData);
+  if (data.searchData && data.dataView === 'search') {
+    renderRecipeCards(data.searchData);
   }
 });
 
 // click event listener for the home icon which will
 // update classnames to display the feature component
 // update window location hash to previous search string
-// update searchData to null
+// update data.searchData to null
 homeIcon.addEventListener('click', event => {
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
   // recipeSection.className = 'recipe-information hidden';
-  window.location.hash = '#home' + '?prev-search&' + prevSearch;
-  searchData = null;
-  dataView = 'home';
+  window.location.hash = '#home' + '?prev-search&' + data.prevSearch;
+  data.searchData = null;
+  data.dataView = 'home';
 });
