@@ -32,16 +32,16 @@ function searchRecipes(ingredients) {
 
 // modify a string taken as the argument
 // assign value to a variable and return variable
-function convertSearchString(string) {
-  const searchString = string.split(' ').join('+');
-  return searchString;
+function windowHashString(string) {
+  const newString = string.split(' ').join('+');
+  return newString;
 }
 
 // take form text value and create a new string which will be used as an argument to
 // the synchronous AJAX call
 function searchForm(event) {
   event.preventDefault();
-  const convertedString = convertSearchString(searchInput.value);
+  const convertedString = windowHashString(searchInput.value);
   searchRecipes(convertedString);
   dataView = 'search';
   window.location.hash = '#search=' + convertedString;
