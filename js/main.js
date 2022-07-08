@@ -53,7 +53,7 @@ function searchForm(event) {
 // append resultDataList to resultSection
 // render the recipe cards to the dom
 function renderRecipeCards(array) {
-  resultSection.innerHTML = '';
+  resultDataList.innerHTML = '';
   const recipes = array.results;
   for (let i = 0; i < recipes.length; i++) {
     const newCard = {
