@@ -73,6 +73,9 @@ function renderRecipeCards(array) {
     newCard.recipeContext.appendChild(newCard.recipeDuration);
     newCard.recipeContext.appendChild(newCard.recipeNutrition);
     newCard.recipeCard.appendChild(newCard.recipeContext);
+    newCard.recipeCard.addEventListener('click', e => {
+      renderRecipe(e, recipes);
+    });
     resultDataList.appendChild(newCard.recipeCard);
     resultSection.appendChild(resultDataList);
   }
@@ -91,16 +94,18 @@ function singleCard(options) {
   return element;
 }
 
-// function renderRecipe(event, array) {
-//   const carID = event.target.id;
-//   const recipeArray = array.results;
-//   for (let i = 0; i < recipeArray.length; i++) {
-//     if (parseInt(carID) === recipeArray[i].id) {
-//       console.log('---------it worked---------');
-//       console.log(recipeArray[i]);
-//     }
-//   }
-// }
+function renderRecipe(event, array) {
+  const cardID = event.currentTarget.getAttribute('id');
+  const recipeArray = array;
+  for (let i = 0; i < recipeArray.length; i++) {
+    if (parseInt(cardID) === recipeArray[i].id) {
+      // eslint-disable-next-line
+      console.log('---------it worked---------');
+      // eslint-disable-next-line
+      console.log(recipeArray[i]);
+    }
+  }
+}
 
 keywordSearch.addEventListener('click', searchForm);
 
