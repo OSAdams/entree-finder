@@ -61,12 +61,12 @@ function renderRecipeCards(array) {
   const recipes = array.results;
   for (let i = 0; i < recipes.length; i++) {
     const newCard = {
-      recipeCard: singleCard('div', 'recipe-card', recipes[i].id),
-      recipeImg: singleCard('div', 'recipe-img', null, recipes[i].image),
-      recipeTitle: singleCard('h3', null, null, null, recipes[i].title),
-      recipeDuration: singleCard('p', null, null, null, 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes'),
-      recipeNutrition: singleCard('p', null, null, null, 'Calories: ' + recipes[i].nutrition.nutrients[0].amount),
-      recipeContext: singleCard('div', 'recipe-context')
+      recipeCard: singleCard({ type: 'div', className: 'recipe-card', id: recipes[i].id }),
+      recipeImg: singleCard({ type: 'div', className: 'recipe-img', image: recipes[i].image }),
+      recipeTitle: singleCard({ type: 'h3', textContent: recipes[i].title }),
+      recipeDuration: singleCard({ type: 'p', textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
+      recipeNutrition: singleCard({ type: 'p', textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
+      recipeContext: singleCard({ type: 'div', className: 'recipe-context' })
     };
     newCard.recipeCard.appendChild(newCard.recipeImg);
     newCard.recipeContext.appendChild(newCard.recipeTitle);
@@ -78,25 +78,17 @@ function renderRecipeCards(array) {
   }
 }
 
-// function definition with 6 parameters
-// create an element with the first parameter
-// create and update attribute values with remaining parameters
+// function definition with ONE object parameter
+// create an element with options.type
+// create and update attribute values with remaining property values
 // return the element value
-function singleCard(type, className, id, image, content) {
-  const elementType = document.createElement(type);
-  if (className) {
-    elementType.className = className;
-  }
-  if (id) {
-    elementType.id = id;
-  }
-  if (image) {
-    elementType.style.backgroundImage = ('url(' + image + ')');
-  }
-  if (content) {
-    elementType.textContent = content;
-  }
-  return elementType;
+function singleCard(options) {
+  const element = document.createElement(options.type);
+  if (options.className) element.className = options.className;
+  if (options.id) element.id = options.id;
+  if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
+  if (options.textContent) element.textContent = options.textContent;
+  return element;
 }
 
 // function renderRecipe(event, array) {
