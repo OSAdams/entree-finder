@@ -82,7 +82,7 @@ function renderRecipeCards(array) {
 // create an element with the first parameter
 // create and update attribute values with remaining parameters
 // return the element value
-function singleCard(type, className, id, bgImage, content) {
+function singleCard(type, className, id, image, content) {
   const elementType = document.createElement(type);
   if (className) {
     elementType.className = className;
@@ -90,8 +90,8 @@ function singleCard(type, className, id, bgImage, content) {
   if (id) {
     elementType.id = id;
   }
-  if (bgImage) {
-    elementType.style.backgroundImage = ('url(' + bgImage + ')');
+  if (image) {
+    elementType.style.backgroundImage = ('url(' + image + ')');
   }
   if (content) {
     elementType.textContent = content;
