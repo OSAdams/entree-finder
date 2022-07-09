@@ -96,10 +96,12 @@ function renderRecipeCards(array) {
 function newElement(tag, options) {
   if (!tag || typeof tag !== 'string') return { error: 'The element tag is required' };
   const element = document.createElement(tag);
-  if (options.className) element.className = options.className;
-  if (options.id) element.id = options.id;
-  if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
-  if (options.textContent) element.textContent = options.textContent;
+  if (options) {
+    if (options.className) element.className = options.className;
+    if (options.id) element.id = options.id;
+    if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
+    if (options.textContent) element.textContent = options.textContent;
+  }
   return element;
 }
 
