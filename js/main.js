@@ -57,12 +57,12 @@ function renderRecipeCards(array) {
   const recipes = array.results;
   for (let i = 0; i < recipes.length; i++) {
     const newCard = {
-      recipeCard: singleCard({ type: 'div', className: 'recipe-card', id: recipes[i].id }),
-      recipeImg: singleCard({ type: 'div', className: 'recipe-img', image: recipes[i].image }),
-      recipeTitle: singleCard({ type: 'h3', textContent: recipes[i].title }),
-      recipeDuration: singleCard({ type: 'p', textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
-      recipeNutrition: singleCard({ type: 'p', textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
-      recipeContext: singleCard({ type: 'div', className: 'recipe-context' })
+      recipeCard: singleCard('div', { className: 'recipe-card', id: recipes[i].id }),
+      recipeImg: singleCard('div', { className: 'recipe-img', image: recipes[i].image }),
+      recipeTitle: singleCard('h3', { textContent: recipes[i].title }),
+      recipeDuration: singleCard('p', { textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
+      recipeNutrition: singleCard('p', { textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
+      recipeContext: singleCard('div', { className: 'recipe-context' })
     };
     newCard.recipeCard.appendChild(newCard.recipeImg);
     newCard.recipeContext.appendChild(newCard.recipeTitle);
@@ -98,7 +98,7 @@ function renderRecipe(event, array) {
       // eslint-disable-next-line
       console.log('---------it worked---------');
       // eslint-disable-next-line
-      console.log(recipeArray[i]);
+      console.log(recipeArray[i], cardID, recipeArray[i].id);
     }
   }
 }
