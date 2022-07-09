@@ -17,7 +17,7 @@ function searchRecipes(ingredients) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
    ingredients +
-   '&number=25&instructionsRequired=true&addRecipeNutrition=true' +
+   '&number=12&instructionsRequired=true&addRecipeNutrition=true' +
    '&apiKey=633237cc8f324710afa989c4ba9993f0', false);
   xhr.addEventListener('load', () => {
     data.searchData = JSON.parse(xhr.response);
@@ -27,42 +27,54 @@ function searchRecipes(ingredients) {
 }
 
 // modify a string taken as the argument
-// assign value to a variable and return variable
+// assign value to a variable using split and join methods
+// for the argument passed
+// return value
 function windowHashString(string) {
   const newString = string.split(' ').join('+');
   return newString;
 }
 
-// take form text value and create a new string which will be used as an argument to
-// the synchronous AJAX call
+// take search form text value and create a new string
+// call searchRecipe with the converted string as an argument
+// update window hash to display the converted string for search
+// reset the search form input value
+// update classNames of feature section container
+// and result section container
 function searchForm(event) {
   event.preventDefault();
   const convertedString = windowHashString(searchInput.value);
   searchRecipes(convertedString);
   data.dataView = 'search';
-  window.location.hash = '#search=' + convertedString;
+  window.location.hash += '#search=' + convertedString;
   data.prevSearch = convertedString;
   searchInput.value = '';
   featureSection.className = 'search-container hidden';
   resultSection.className = 'result-container';
 }
 
-// create an object and assign value to the properties by calling singleCard func
-// append children with value to newCard
-// append the recipeCards to resultDataList
-// append resultDataList to resultSection
-// render the recipe cards to the dom
+// reset inner html
+// assign the results property of the argument passed to a variable
+// loop through recipes array to create a new element with
+// optional attributes by calling the newElement function
+// and assigning the value to properties inside of the newCard object
+// append elements to parent recipe card elements
+// add a click event listener to each recipe card created
+// in eventListener callback, call renderRecipes with event
+// and recipes array as arguments
+// we will use the value of the id attribute to render the full recipe
+// in the renderRecipe function
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
   const recipes = array.results;
   for (let i = 0; i < recipes.length; i++) {
     const newCard = {
-      recipeCard: singleCard('div', { className: 'recipe-card', id: recipes[i].id }),
-      recipeImg: singleCard('div', { className: 'recipe-img', image: recipes[i].image }),
-      recipeTitle: singleCard('h3', { textContent: recipes[i].title }),
-      recipeDuration: singleCard('p', { textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
-      recipeNutrition: singleCard('p', { textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
-      recipeContext: singleCard('div', { className: 'recipe-context' })
+      recipeCard: newElement('div', { className: 'recipe-card', id: recipes[i].id }),
+      recipeImg: newElement('div', { className: 'recipe-img', image: recipes[i].image }),
+      recipeTitle: newElement('h3', { textContent: recipes[i].title }),
+      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
+      recipeNutrition: newElement('p', { textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
+      recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.recipeCard.appendChild(newCard.recipeImg);
     newCard.recipeContext.appendChild(newCard.recipeTitle);
@@ -78,11 +90,12 @@ function renderRecipeCards(array) {
 }
 
 // function definition with ONE object parameter
-// create an element with options.type
+// create an element with options.tag
 // create and update attribute values with remaining property values
 // return the element value
-function singleCard(options) {
-  const element = document.createElement(options.type);
+function newElement(tag, options) {
+  if (!tag || typeof tag !== 'string') return { error: 'The element tag is required' };
+  const element = document.createElement(tag);
   if (options.className) element.className = options.className;
   if (options.id) element.id = options.id;
   if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
@@ -93,6 +106,8 @@ function singleCard(options) {
 function renderRecipe(event, array) {
   const cardID = event.currentTarget.getAttribute('id');
   const recipeArray = array;
+  // eslint-disable-next-line
+  console.log(recipeArray);
   for (let i = 0; i < recipeArray.length; i++) {
     if (parseInt(cardID) === recipeArray[i].id) {
       // eslint-disable-next-line
@@ -122,7 +137,7 @@ homeIcon.addEventListener('click', event => {
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
   // recipeSection.className = 'recipe-information hidden';
-  window.location.hash = '#home' + '?prev-search&' + data.prevSearch;
+  window.location.hash = '#home' + '?prev-search=' + data.prevSearch;
   data.searchData = null;
   data.dataView = 'home';
 });
