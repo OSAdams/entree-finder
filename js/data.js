@@ -2,5 +2,5 @@
 const data = {
   searchData: null,
   dataView: '',
-  prevSearch: ''
+  prevSearch: null
 };
