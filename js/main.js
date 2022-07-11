@@ -4,7 +4,6 @@ const featureSection = document.querySelector('.feature-container');
 const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
 const homeIcon = document.querySelector('.fas.fa-home');
-// const recipeSection = document.querySelector('.recipe-information');
 
 // reset data.searchData variable value to null
 // use argument passed and concatenated to string passed as a second argument
@@ -69,27 +68,30 @@ function renderRecipeCards(array) {
   const recipes = array.results;
   for (let i = 0; i < recipes.length; i++) {
     const newCard = {
-      recipeCard: newElement('div', { className: 'recipe-card', id: recipes[i].id }),
-      recipeImg: newElement('div', { className: 'recipe-img', image: recipes[i].image }),
-      recipeTitle: newElement('h3', { textContent: recipes[i].title }),
+      cardContainer: newElement('div', { className: 'recipe-card', id: recipes[i].id }),
+      bgImage: newElement('div', { className: 'recipe-img', image: recipes[i].image }),
+      title: newElement('h3', { textContent: recipes[i].title }),
       recipeDuration: newElement('p', { textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
       recipeNutrition: newElement('p', { textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
-    newCard.recipeCard.appendChild(newCard.recipeImg);
-    newCard.recipeContext.appendChild(newCard.recipeTitle);
+    newCard.cardContainer.appendChild(newCard.bgImage);
+    newCard.recipeContext.appendChild(newCard.title);
     newCard.recipeContext.appendChild(newCard.recipeDuration);
     newCard.recipeContext.appendChild(newCard.recipeNutrition);
-    newCard.recipeCard.appendChild(newCard.recipeContext);
-    newCard.recipeCard.addEventListener('click', e => {
+    newCard.cardContainer.appendChild(newCard.recipeContext);
+    newCard.cardContainer.addEventListener('click', e => {
       renderRecipe(e, recipes);
     });
-    resultDataList.appendChild(newCard.recipeCard);
+    resultDataList.appendChild(newCard.cardContainer);
     resultSection.appendChild(resultDataList);
   }
 }
 
-// function definition with ONE object parameter
+// function definition with a required element tag
+// and optional object parameter
+// return error if tag argument passed is not a string
+// or does not exist
 // create an element with options.tag
 // create and update attribute values with remaining property values
 // return the element value
@@ -101,28 +103,61 @@ function newElement(tag, options) {
     if (options.id) element.id = options.id;
     if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
     if (options.textContent) element.textContent = options.textContent;
+    if (options.innerHTML) element.innerHTML = options.innerHTML;
   }
   return element;
 }
 
+const recipeSection = document.querySelector('.recipe-container');
+const recipeDataContainer = document.querySelector('.recipe-data-container');
+
 function renderRecipe(event, array) {
   const cardID = event.currentTarget.getAttribute('id');
   const recipeArray = array;
-  // eslint-disable-next-line
-  console.log(recipeArray);
   for (let i = 0; i < recipeArray.length; i++) {
     if (parseInt(cardID) === recipeArray[i].id) {
-      // eslint-disable-next-line
-      console.log('---------it worked---------');
-      // eslint-disable-next-line
-      console.log(recipeArray[i], cardID, recipeArray[i].id);
+      const clickedRecipe = recipeArray[i];
+      const fullRecipe = {
+        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.image }),
+        titleContainer: newElement('div', { className: 'info-title' }),
+        title: newElement('h3', { textContent: clickedRecipe.title }),
+        ingredientContainer: newElement('div', { className: 'ingredients-data' }),
+        summary: newElement('div', { className: 'info-summary', innerHTML: clickedRecipe.summary }),
+        ingredients: clickedRecipe.nutrition.ingredients.slice(),
+        ul: newElement('ul'),
+        containerOne: newElement('div', { className: 'recipe-block' }),
+        containerTwo: newElement('div', { className: 'recipe-block-two' }),
+        singleIngredient: function (array) {
+          for (let i = 0; i < array.length; i++) {
+            const ingredient = {
+              li: newElement('li'),
+              name: newElement('span', { className: 'rec-name', textContent: array[i].name + ': ' }),
+              amount: newElement('span', { className: 'rec-ingr', textContent: array[i].amount + ' ' + array[i].unit })
+            };
+            ingredient.li.appendChild(ingredient.name);
+            ingredient.li.appendChild(ingredient.amount);
+            this.ul.appendChild(ingredient.li);
+          }
+        }
+      };
+      fullRecipe.titleContainer.appendChild(fullRecipe.title);
+      fullRecipe.containerOne.appendChild(fullRecipe.bgImage);
+      fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
+      fullRecipe.containerTwo.appendChild(fullRecipe.summary);
+      fullRecipe.singleIngredient(fullRecipe.ingredients);
+      fullRecipe.ingredientContainer.appendChild(fullRecipe.ul);
+      fullRecipe.containerTwo.appendChild(fullRecipe.ingredientContainer);
+      recipeDataContainer.appendChild(fullRecipe.containerOne);
+      recipeDataContainer.appendChild(fullRecipe.containerTwo);
+      recipeSection.className = 'recipe-container';
+      resultSection.className = 'result-container hidden';
     }
   }
 }
 
 keywordSearch.addEventListener('click', searchForm);
 
-// when window hash changes call the renderRecipeCards function with data.searchData
+// when window hash changes call the rendercardContainers function with data.searchData
 // as the argument IF
 // data.searchData is a truthy value and data.dataView is absolutely equal to 'search'
 window.addEventListener('hashchange', e => {
@@ -141,7 +176,7 @@ window.addEventListener('hashchange', e => {
 homeIcon.addEventListener('click', event => {
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
-  // recipeSection.className = 'recipe-information hidden';
+  recipeSection.className = 'recipe-container hidden';
   window.location.hash = '#home' + '?prev-search=' + data.prevSearch;
   data.searchData = null;
   data.dataView = 'home';
