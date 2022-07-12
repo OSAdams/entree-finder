@@ -163,7 +163,7 @@ keywordSearch.addEventListener('click', searchForm);
 window.addEventListener('hashchange', e => {
   if (data.searchData && data.dataView === 'search') {
     renderRecipeCards(data.searchData);
-    if (!data.prevSearch && data.searchData !== data.prevSearch) {
+    if (!data.prevSearch || data.searchData !== data.prevSearch) {
       data.prevSearch = data.searchData;
     }
   }
