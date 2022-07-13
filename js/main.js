@@ -122,7 +122,7 @@ function renderRecipe(event, array) {
         titleContainer: newElement('div', { className: 'info-title' }),
         title: newElement('h3', { textContent: clickedRecipe.title }),
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
-        summary: newElement('div', { className: 'info-summary', innerHTML: clickedRecipe.summary }),
+        summary: newElement('div', { className: 'info-summary', innerHTML: removeTags(clickedRecipe.summary) }),
         ingredients: clickedRecipe.nutrition.ingredients.slice(),
         ul: newElement('ul'),
         containerOne: newElement('div', { className: 'recipe-block' }),
@@ -181,3 +181,15 @@ homeIcon.addEventListener('click', event => {
   data.searchData = null;
   data.dataView = 'home';
 });
+
+function removeTags(str) {
+  const error = {};
+  if ((str === null) || (str === '')) {
+    error.error = 'Invalid string argument';
+    return error;
+  } else { str = str.toString(); }
+  // Regular expression to identify HTML tags in
+  // the input string. Replacing the identified
+  // HTML tag with a null string.
+  return str.replace(/(<([^>]+)>)/ig, '');
+}

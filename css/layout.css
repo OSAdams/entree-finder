@@ -65,4 +65,9 @@ main {
     margin-top: auto;
     margin-bottom: auto;
   }
+
+  .recipe-block > .info-image {
+    padding: 0;
+    margin: 5px;
+  }
 }
