@@ -131,8 +131,8 @@ function renderRecipe(event, array) {
           for (let i = 0; i < array.length; i++) {
             const ingredient = {
               li: newElement('li'),
-              name: newElement('span', { className: 'rec-name', textContent: array[i].name + ': ' }),
-              amount: newElement('span', { className: 'rec-ingr', textContent: array[i].amount + ' ' + array[i].unit })
+              name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
+              amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
             };
             ingredient.li.appendChild(ingredient.name);
             ingredient.li.appendChild(ingredient.amount);
