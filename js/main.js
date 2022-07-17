@@ -184,7 +184,7 @@ homeIcon.addEventListener('click', event => {
 
 function removeTags(str) {
   const error = {};
-  if ((str === null) || (str === '')) {
+  if (!str) {
     error.error = 'Invalid string argument';
     return error;
   } else { str = str.toString(); }
