@@ -126,13 +126,16 @@ function renderRecipe(event, array) {
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
         instructionHeader: newElement('h3', { textContent: 'Instructions' }),
+        // use variable to display summary for future feature
+        // null
         summary: newElement('div', { className: 'info-summary', innerHTML: removeTags(clickedRecipe.summary) }),
         ingredients: clickedRecipe.nutrition.ingredients.slice(),
+        instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
-        instructionUl: newElement('ul'),
+        instructionOl: newElement('ol'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
-        singleIngredient: function (array) {
+        recipeIngredients: function (array) {
           for (let i = 0; i < array.length; i++) {
             const ingredient = {
               li: newElement('li'),
@@ -143,15 +146,28 @@ function renderRecipe(event, array) {
             ingredient.li.appendChild(ingredient.amount);
             this.ingredientUl.appendChild(ingredient.li);
           }
+        },
+        recipeInstructions: function (array) {
+          let step = 1;
+          for (let i = 0; i < array.length; i++) {
+            const number = newElement('span', { className: 'instruction-number', textContent: step + ') ' });
+            const instruction = {
+              li: newElement('li', { textContent: array[i].step })
+            };
+            instruction.li.prepend(number);
+            this.instructionOl.appendChild(instruction.li);
+            step++;
+          }
         }
       };
       fullRecipe.titleContainer.appendChild(fullRecipe.title);
       fullRecipe.containerOne.appendChild(fullRecipe.bgImage);
       fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
       fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
-      fullRecipe.instructionContainer.appendChild(fullRecipe.summary);
+      fullRecipe.recipeInstructions(fullRecipe.instructions);
+      fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
       fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
-      fullRecipe.singleIngredient(fullRecipe.ingredients);
+      fullRecipe.recipeIngredients(fullRecipe.ingredients);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientHeader);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientUl);
       fullRecipe.containerTwo.appendChild(fullRecipe.ingredientContainer);
