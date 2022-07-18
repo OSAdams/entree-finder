@@ -112,6 +112,7 @@ const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
 
 function renderRecipe(event, array) {
+  document.querySelector('.recipe-data-container').innerHTML = '';
   const cardID = event.currentTarget.getAttribute('id');
   const recipeArray = array;
   for (let i = 0; i < recipeArray.length; i++) {
