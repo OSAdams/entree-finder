@@ -122,10 +122,14 @@ function renderRecipe(event, array) {
         bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.image }),
         titleContainer: newElement('div', { className: 'info-title' }),
         title: newElement('h3', { textContent: clickedRecipe.title }),
+        ingredientHeader: newElement('h3', { textContent: 'Ingredients' }),
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
+        instructionContainer: newElement('div', { className: 'instruction-data' }),
+        instructionHeader: newElement('h3', { textContent: 'Instructions' }),
         summary: newElement('div', { className: 'info-summary', innerHTML: removeTags(clickedRecipe.summary) }),
         ingredients: clickedRecipe.nutrition.ingredients.slice(),
-        ul: newElement('ul'),
+        ingredientUl: newElement('ul'),
+        instructionUl: newElement('ul'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
         singleIngredient: function (array) {
@@ -137,16 +141,19 @@ function renderRecipe(event, array) {
             };
             ingredient.li.appendChild(ingredient.name);
             ingredient.li.appendChild(ingredient.amount);
-            this.ul.appendChild(ingredient.li);
+            this.ingredientUl.appendChild(ingredient.li);
           }
         }
       };
       fullRecipe.titleContainer.appendChild(fullRecipe.title);
       fullRecipe.containerOne.appendChild(fullRecipe.bgImage);
       fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
-      fullRecipe.containerTwo.appendChild(fullRecipe.summary);
+      fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
+      fullRecipe.instructionContainer.appendChild(fullRecipe.summary);
+      fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
       fullRecipe.singleIngredient(fullRecipe.ingredients);
-      fullRecipe.ingredientContainer.appendChild(fullRecipe.ul);
+      fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientHeader);
+      fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientUl);
       fullRecipe.containerTwo.appendChild(fullRecipe.ingredientContainer);
       recipeDataContainer.appendChild(fullRecipe.containerOne);
       recipeDataContainer.appendChild(fullRecipe.containerTwo);

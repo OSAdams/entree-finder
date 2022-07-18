@@ -37,11 +37,6 @@
   font-size: 2.5rem;
 }
 
-main {
-  display: flex;
-  flex-basis: auto;
-}
-
 .feature-container {
   width: 100%;
   height: 100%;
@@ -97,9 +92,14 @@ main {
 .result-container,
 .recipe-container {
   width: 100%;
+  height: 760px;
+  padding-bottom: 10px;
+}
+
+.result-data-list,
+.recipe-data-container {
   height: 100%;
   overflow-y: auto;
-  padding-bottom: 10px;
 }
 
 .result-data-list {
@@ -158,7 +158,16 @@ main {
   border-radius: 3px;
 }
 
-.info-title {
+.recipe-data-container h3 {
+  margin-bottom: 15px;
+  margin-top: 10px;
+  font-family:
+    "Playfair Display",
+    serif;
+  text-align: center;
+}
+
+.info-title, {
   text-align: center;
 }
 
