@@ -110,6 +110,7 @@ function newElement(tag, options) {
 
 const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
+let recipeData = null;
 
 function renderRecipe(event, array) {
   document.querySelector('.recipe-data-container').innerHTML = '';
@@ -117,6 +118,7 @@ function renderRecipe(event, array) {
   const recipeArray = array;
   for (let i = 0; i < recipeArray.length; i++) {
     if (parseInt(cardID) === recipeArray[i].id) {
+      recipeData = null;
       const clickedRecipe = recipeArray[i];
       const fullRecipe = {
         bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.image }),
@@ -129,6 +131,7 @@ function renderRecipe(event, array) {
         // use variable to display summary for future feature
         // null
         summary: newElement('div', { className: 'info-summary', innerHTML: removeTags(clickedRecipe.summary) }),
+        // end null
         ingredients: clickedRecipe.nutrition.ingredients.slice(),
         instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
@@ -173,10 +176,13 @@ function renderRecipe(event, array) {
       fullRecipe.containerTwo.appendChild(fullRecipe.ingredientContainer);
       recipeDataContainer.appendChild(fullRecipe.containerOne);
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
+      recipeData = clickedRecipe;
+      recipeControls(recipeDataContainer, recipeData);
       recipeSection.className = 'recipe-container';
       resultSection.className = 'result-container hidden';
     }
   }
+
 }
 
 keywordSearch.addEventListener('click', searchForm);
@@ -216,4 +222,22 @@ function removeTags(str) {
   // the input string. Replacing the identified
   // HTML tag with a null string.
   return str.replace(/(<([^>]+)>)/ig, '');
+}
+
+// this guy is going to populate the parent element in the dom with a container
+// containing buttons with event listeners
+// this is the prototype - looking to enhance this or move it into an object
+function recipeControls(parent, array) {
+  const actionLib = {
+    container: newElement('div', { className: 'action-container', id: 'recipe-actions' }),
+    saveButton: newElement('button', { className: 'action-button', textContent: 'Save Recipe' })
+  };
+  actionLib.saveButton.addEventListener('click', e => {
+    // eslint-disable-next-line
+    console.log(array);
+    // eslint-disable-next-line
+    console.log(e.target);
+  });
+  actionLib.container.appendChild(actionLib.saveButton);
+  parent.appendChild(actionLib.container);
 }
