@@ -120,6 +120,7 @@ function renderRecipe(event, array) {
     if (parseInt(cardID) === recipeArray[i].id) {
       recipeData = null;
       const clickedRecipe = recipeArray[i];
+      data.recipeData = clickedRecipe;
       const fullRecipe = {
         bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.image }),
         titleContainer: newElement('div', { className: 'info-title' }),
@@ -227,16 +228,21 @@ function removeTags(str) {
 // this guy is going to populate the parent element in the dom with a container
 // containing buttons with event listeners
 // this is the prototype - looking to enhance this or move it into an object
-function recipeControls(parent, array) {
+function recipeControls(parent, object) {
   const actionLib = {
     container: newElement('div', { className: 'action-container', id: 'recipe-actions' }),
     saveButton: newElement('button', { className: 'action-button', textContent: 'Save Recipe' })
   };
   actionLib.saveButton.addEventListener('click', e => {
     // eslint-disable-next-line
-    console.log(array);
+    console.log(object);
     // eslint-disable-next-line
     console.log(e.target);
+    data.savedData[data.saveId] = {
+      recipe: object,
+      date: new Date()
+    };
+    data.saveId++;
   });
   actionLib.container.appendChild(actionLib.saveButton);
   parent.appendChild(actionLib.container);
