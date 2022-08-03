@@ -234,10 +234,6 @@ function recipeControls(parent, object) {
     saveButton: newElement('button', { className: 'action-button', textContent: 'Save Recipe' })
   };
   actionLib.saveButton.addEventListener('click', e => {
-    // eslint-disable-next-line
-    console.log(object);
-    // eslint-disable-next-line
-    console.log(e.target);
     data.savedData[data.saveId] = {
       recipe: object,
       date: new Date()
