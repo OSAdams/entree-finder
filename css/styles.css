@@ -58,7 +58,8 @@
 
 .def-button,
 .search-input,
-.close-button {
+.close-button,
+.action-button {
   height: 35px;
   width: 280px;
   background-color: #243a73;
@@ -66,6 +67,14 @@
   border: none;
   color: #f0f0f0;
   cursor: pointer;
+}
+
+.action-container {
+  padding: 10px;
+}
+
+.action-button {
+  width: 200px;
 }
 
 .search-input {
