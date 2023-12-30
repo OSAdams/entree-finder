@@ -13,16 +13,25 @@ const homeIcon = document.querySelector('.fas.fa-home');
 // data.dataView is updated to 'search' value
 // eslint-disable-next-line
 function searchRecipes(ingredients) {
-  data.searchData = null;
+  // data.searchData = null;
+  // const xhr = new XMLHttpRequest();
+  // xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
+  //  ingredients +
+  //  '&number=12&instructionsRequired=true&addRecipeNutrition=true&apiKey=633237cc8f324710afa989c4ba9993f0', false);
+  // xhr.addEventListener('load', () => {
+  //   data.searchData = JSON.parse(xhr.response);
+  // });
+  // xhr.send();
+  // data.dataView = 'search';
+  let data = null;
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
-   ingredients +
-   '&number=12&instructionsRequired=true&addRecipeNutrition=true&apiKey=633237cc8f324710afa989c4ba9993f0', false);
+  xhr.open('GET', 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + ingredients);
   xhr.addEventListener('load', () => {
-    data.searchData = JSON.parse(xhr.response);
+    data = JSON.parse(xhr.response);
+    // eslint-disable-next-line
+    console.log('data: ', data);
   });
   xhr.send();
-  data.dataView = 'search';
 }
 
 /*
@@ -100,14 +109,16 @@ function searchForm(event) {
 // in the renderRecipe function
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
-  const recipes = array.results;
-  for (let i = 0; i < recipes.length; i++) {
+  // eslint-disable-next-line
+  console.log('argument value: ', array);
+  const { results } = array;
+  for (let i = 0; i < results.length; i++) {
     const newCard = {
-      cardContainer: newElement('div', { className: 'recipe-card', id: recipes[i].id }),
-      bgImage: newElement('div', { className: 'recipe-img', image: recipes[i].image }),
-      title: newElement('h3', { textContent: recipes[i].title }),
-      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + recipes[i].readyInMinutes + ' minutes' }),
-      recipeNutrition: newElement('p', { textContent: 'Calories: ' + recipes[i].nutrition.nutrients[0].amount }),
+      cardContainer: newElement('div', { className: 'recipe-card', id: results[i].id }),
+      bgImage: newElement('div', { className: 'recipe-img', image: results[i].image }),
+      title: newElement('h3', { textContent: results[i].title }),
+      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + results[i].readyInMinutes + ' minutes' }),
+      recipeNutrition: newElement('p', { textContent: 'Calories: ' + results[i].nutrition.nutrients[0].amount }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
@@ -116,7 +127,7 @@ function renderRecipeCards(array) {
     newCard.recipeContext.appendChild(newCard.recipeNutrition);
     newCard.cardContainer.appendChild(newCard.recipeContext);
     newCard.cardContainer.addEventListener('click', e => {
-      renderRecipe(e, recipes);
+      renderRecipe(e, results);
     });
     resultDataList.appendChild(newCard.cardContainer);
     resultSection.appendChild(resultDataList);

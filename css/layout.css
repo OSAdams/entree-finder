@@ -16,6 +16,30 @@ main {
   justify-content: center;
 }
 
+.search-form-container {
+  margin-top: 2rem;
+}
+
+.search-form-container > div {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form-container > div > h3 {
+  margin-bottom: 2rem;
+}
+
+.search-form-controls {
+  align-items: center;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .result-data-list {
   display: flex;
   flex-wrap: wrap;
