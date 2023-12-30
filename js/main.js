@@ -11,18 +11,56 @@ const homeIcon = document.querySelector('.fas.fa-home');
 // when loaded, data.searchData is assigned to the return value of the call parse method
 // of the JSON object with xhr.response as an argument
 // data.dataView is updated to 'search' value
+// eslint-disable-next-line
 function searchRecipes(ingredients) {
   data.searchData = null;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
    ingredients +
-   '&number=12&instructionsRequired=true&addRecipeNutrition=true' +
-   '&apiKey=633237cc8f324710afa989c4ba9993f0', false);
+   '&number=12&instructionsRequired=true&addRecipeNutrition=true&apiKey=633237cc8f324710afa989c4ba9993f0', false);
   xhr.addEventListener('load', () => {
     data.searchData = JSON.parse(xhr.response);
   });
   xhr.send();
   data.dataView = 'search';
+}
+
+/*
+# This function will be called in searchForm() which is called when the user clicks
+# the search button. This function will ensure the argument passed is a string
+# of at least 3 characters. Once the input passes the input test, an XHR Request
+# will be sent to the API with the passed string argument, returning the parsed
+# JSON xhr.response object.
+*/
+
+// eslint-disable-next-line
+function searchRecipesNEW(keywords) {
+  if (!keywords.length > 3) {
+    console.error({ error: 'search input must be at least 3 characters' });
+    return { error: 'Please expand your search value to beyond 3 characters!' };
+  }
+  const dataRequest = null;
+  let dataResponse = null;
+  const xhr = new XMLHttpRequest();
+  xhr.withCredentials = false;
+
+  xhr.addEventListener('readystatechange', function () {
+    if (this.readyState === this.DONE) {
+      dataResponse = JSON.parse(xhr.response);
+      data.searchData = dataResponse;
+      data.dataView = 'search';
+      featureSection.className = 'search-container hidden';
+      resultSection.className = 'result-container';
+    }
+  });
+
+  xhr.open('GET', 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com' +
+  '/recipes/complexSearch?' +
+  'query=' + keywords +
+  '&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&limitLicense=false');
+  xhr.setRequestHeader('X-RapidAPI-Key', 'd5a7627e73msh9348f86cbc9c618p1d6431jsnfdfbfa846531');
+  xhr.setRequestHeader('X-RapidAPI-Host', 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com');
+  xhr.send(dataRequest);
 }
 
 // modify a string taken as the argument
@@ -43,13 +81,10 @@ function windowHashString(string) {
 function searchForm(event) {
   event.preventDefault();
   const convertedString = windowHashString(searchInput.value);
-  searchRecipes(convertedString);
-  data.dataView = 'search';
-  window.location.hash += '#search=' + convertedString;
-  data.prevSearch = convertedString;
+  searchRecipesNEW(convertedString);
   searchInput.value = '';
-  featureSection.className = 'search-container hidden';
-  resultSection.className = 'result-container';
+  data.prevSearch = convertedString;
+  window.location.hash += '#search=' + convertedString;
 }
 
 // reset inner html
@@ -243,3 +278,12 @@ function recipeControls(parent, object) {
   actionLib.container.appendChild(actionLib.saveButton);
   parent.appendChild(actionLib.container);
 }
+
+/*
+ # NOTES: 1A 30-12-2023
+ # Updating the Order of Operations in the following functions:
+ # searchRecipes, searchForm - awaiting tests.
+ #
+ #
+ #
+*/
