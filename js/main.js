@@ -58,7 +58,7 @@ function searchForm(event) {
     searchInput.value = '';
     data.prevSearch = convertedString;
     window.location.hash = '';
-    window.location.hash += '#search=' + convertedString;
+    window.location.hash += '#search?keyword=' + convertedString;
     // eslint-disable-next-line
     console.log('searchForm, data.searchData value: ', data.searchData)
     renderRecipeCards(data.searchData);
@@ -218,8 +218,6 @@ homeIcon.addEventListener('click', event => {
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
   recipeSection.className = 'recipe-container hidden';
-  window.location.hash = '#home' + '?prev-search=' + data.prevSearch;
-  data.searchData = null;
   data.dataView = 'home';
 });
 
@@ -259,6 +257,8 @@ function recipeControls(parent, object) {
  # Updating the Order of Operations in the following functions:
  # searchRecipes, searchForm - awaiting tests.
  #
- #
+ # NOTES: 1B 01-01-2024
+ # Our data is now being used correctly. We need to ensure the data does NOT
+ # reset when the user refreshes the page.
  #
 */
