@@ -15,5 +15,5 @@ if (savedDataJSON !== null) {
 
 window.addEventListener('beforeunload', e => {
   const dataJSON = JSON.stringify(data);
-  localStorage.setItem('vegan-recipes-local-storage', dataJSON);
+  localStorage.setItem('entree-finder-local-storage', dataJSON);
 });

@@ -5,35 +5,6 @@ const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
 const homeIcon = document.querySelector('.fas.fa-home');
 
-// reset data.searchData variable value to null
-// use argument passed and concatenated to string passed as a second argument
-// on the call of open method of the xhr object
-// when loaded, data.searchData is assigned to the return value of the call parse method
-// of the JSON object with xhr.response as an argument
-// data.dataView is updated to 'search' value
-// eslint-disable-next-line
-function searchRecipes(ingredients) {
-  // data.searchData = null;
-  // const xhr = new XMLHttpRequest();
-  // xhr.open('GET', 'https://api.spoonacular.com/recipes/complexSearch?diet=vegan&includeIngredients=' +
-  //  ingredients +
-  //  '&number=12&instructionsRequired=true&addRecipeNutrition=true&apiKey=633237cc8f324710afa989c4ba9993f0', false);
-  // xhr.addEventListener('load', () => {
-  //   data.searchData = JSON.parse(xhr.response);
-  // });
-  // xhr.send();
-  // data.dataView = 'search';
-  let data = null;
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + ingredients);
-  xhr.addEventListener('load', () => {
-    data = JSON.parse(xhr.response);
-    // eslint-disable-next-line
-    console.log('data: ', data);
-  });
-  xhr.send();
-}
-
 /*
 # This function will be called in searchForm() which is called when the user clicks
 # the search button. This function will ensure the argument passed is a string
@@ -42,34 +13,24 @@ function searchRecipes(ingredients) {
 # JSON xhr.response object.
 */
 
-// eslint-disable-next-line
-function searchRecipesNEW(keywords) {
-  if (!keywords.length > 3) {
+function searchRecipes(keyword) {
+  if (!keyword.length > 3) {
     console.error({ error: 'search input must be at least 3 characters' });
     return { error: 'Please expand your search value to beyond 3 characters!' };
   }
-  const dataRequest = null;
-  let dataResponse = null;
+  let searchData = null;
   const xhr = new XMLHttpRequest();
-  xhr.withCredentials = false;
-
-  xhr.addEventListener('readystatechange', function () {
-    if (this.readyState === this.DONE) {
-      dataResponse = JSON.parse(xhr.response);
-      data.searchData = dataResponse;
-      data.dataView = 'search';
-      featureSection.className = 'search-container hidden';
-      resultSection.className = 'result-container';
-    }
+  xhr.open('GET', 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + keyword);
+  xhr.addEventListener('load', () => {
+    searchData = JSON.parse(xhr.response);
+    data.searchData = searchData;
+    data.dataView = 'search';
+    featureSection.className = 'search-container hidden';
+    resultSection.className = 'result-container';
+    // eslint-disable-next-line
+    console.log('searchRecipes data: ', data);
   });
-
-  xhr.open('GET', 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com' +
-  '/recipes/complexSearch?' +
-  'query=' + keywords +
-  '&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&limitLicense=false');
-  xhr.setRequestHeader('X-RapidAPI-Key', 'd5a7627e73msh9348f86cbc9c618p1d6431jsnfdfbfa846531');
-  xhr.setRequestHeader('X-RapidAPI-Host', 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com');
-  xhr.send(dataRequest);
+  xhr.send();
 }
 
 // modify a string taken as the argument
@@ -90,10 +51,16 @@ function windowHashString(string) {
 function searchForm(event) {
   event.preventDefault();
   const convertedString = windowHashString(searchInput.value);
-  searchRecipesNEW(convertedString);
-  searchInput.value = '';
-  data.prevSearch = convertedString;
-  window.location.hash += '#search=' + convertedString;
+  searchRecipes(convertedString);
+  setTimeout(() => {
+    searchInput.value = '';
+    data.prevSearch = convertedString;
+    window.location.hash = '';
+    window.location.hash += '#search=' + convertedString;
+    // eslint-disable-next-line
+    console.log('searchForm, data.searchData value: ', data.searchData)
+    renderRecipeCards(data.searchData);
+  }, 600);
 }
 
 // reset inner html
@@ -106,19 +73,20 @@ function searchForm(event) {
 // in eventListener callback, call renderRecipes with event
 // and recipes array as arguments
 // we will use the value of the id attribute to render the full recipe
-// in the renderRecipe function
+// eslint-disable-next-line
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
+  const { meals } = array;
   // eslint-disable-next-line
-  console.log('argument value: ', array);
-  const { results } = array;
-  for (let i = 0; i < results.length; i++) {
+  console.log('argument value: ', meals);
+  // eslint-disable-next-line
+  for (let i = 0; i < meals.length; i++) {
     const newCard = {
-      cardContainer: newElement('div', { className: 'recipe-card', id: results[i].id }),
-      bgImage: newElement('div', { className: 'recipe-img', image: results[i].image }),
-      title: newElement('h3', { textContent: results[i].title }),
-      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + results[i].readyInMinutes + ' minutes' }),
-      recipeNutrition: newElement('p', { textContent: 'Calories: ' + results[i].nutrition.nutrients[0].amount }),
+      cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
+      bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
+      title: newElement('h3', { textContent: meals[i].strMeal }),
+      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + meals[i].readyInMinutes + ' minutes' }),
+      recipeNutrition: newElement('p', { textContent: '<a href="https://panlasangpinoy.com/beef-asado/" target="__blank">Full Recipe</a>' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
@@ -127,7 +95,7 @@ function renderRecipeCards(array) {
     newCard.recipeContext.appendChild(newCard.recipeNutrition);
     newCard.cardContainer.appendChild(newCard.recipeContext);
     newCard.cardContainer.addEventListener('click', e => {
-      renderRecipe(e, results);
+      renderRecipe(e, meals);
     });
     resultDataList.appendChild(newCard.cardContainer);
     resultSection.appendChild(resultDataList);
@@ -233,18 +201,6 @@ function renderRecipe(event, array) {
 }
 
 keywordSearch.addEventListener('click', searchForm);
-
-// when window hash changes call the rendercardContainers function with data.searchData
-// as the argument IF
-// data.searchData is a truthy value and data.dataView is absolutely equal to 'search'
-window.addEventListener('hashchange', e => {
-  if (data.searchData && data.dataView === 'search') {
-    renderRecipeCards(data.searchData);
-    if (!data.prevSearch || data.searchData !== data.prevSearch) {
-      data.prevSearch = data.searchData;
-    }
-  }
-});
 
 // click event listener for the home icon which will
 // update classnames to display the feature component
