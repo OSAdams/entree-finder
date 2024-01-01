@@ -5,6 +5,17 @@ const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
 const homeIcon = document.querySelector('.fas.fa-home');
 
+const hash = windowHashPage(window.location.hash);
+if (hash === '#search') {
+  featureSection.className = 'feature-container hidden';
+  resultSection.className = 'result-container';
+  renderRecipeCards(data.searchData);
+}
+if (hash === '#home') {
+  featureSection.className = 'feature-container';
+  resultSection.className = 'result-container hidden';
+}
+
 /*
   # searchRecipes will send an XHRHttpsRequest to our public API (Free Meal API)
   # The response will be parsed and stored in our data.searchData object which
@@ -16,6 +27,7 @@ function searchRecipes(keyword) {
     console.error({ error: 'search input must be at least 3 characters' });
     return { error: 'Please expand your search value to beyond 3 characters!' };
   }
+  data.prevSearch = data.searchData;
   let searchData = null;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + keyword);
@@ -23,10 +35,20 @@ function searchRecipes(keyword) {
     searchData = JSON.parse(xhr.response);
     data.searchData = searchData;
     data.dataView = 'search';
-    featureSection.className = 'search-container hidden';
-    resultSection.className = 'result-container';
   });
   xhr.send();
+}
+
+/*
+  # Change this into a window hash updating function. We can use this to control
+  # what data will render.
+*/
+
+function windowHashPage(string) {
+  let hash = null;
+  hash = string.split('?');
+  const [page] = hash;
+  return page;
 }
 
 function windowHashString(string) {
@@ -40,11 +62,9 @@ function searchForm(event) {
   searchRecipes(convertedString);
   setTimeout(() => {
     searchInput.value = '';
-    data.prevSearch = convertedString;
-    window.location.hash = '';
-    window.location.hash += '#search?keyword=' + convertedString;
-    // eslint-disable-next-line
-    console.log('searchForm, data.searchData value: ', data.searchData)
+    window.location.hash = '#search?keyword=' + convertedString;
+    featureSection.className = 'feature-container hidden';
+    resultSection.className = 'result-container';
     renderRecipeCards(data.searchData);
   }, 600);
 }
@@ -186,17 +206,11 @@ function renderRecipe(event, array) {
 
 keywordSearch.addEventListener('click', searchForm);
 
-window.addEventListener('hashchange', e => {
-  if (data.dataView === 'search') {
-    renderRecipeCards(data.searchData);
-  }
-});
-
-homeIcon.addEventListener('click', event => {
+homeIcon.addEventListener('click', e => {
+  data.dataView = 'home';
+  window.location.hash = '#home?';
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
-  recipeSection.className = 'recipe-container hidden';
-  data.dataView = 'home';
 });
 
 /*
