@@ -38,9 +38,11 @@ function searchRecipes(keyword) {
 // for the argument passed
 // return value
 function windowHashString(string) {
-  const newString = string.split(' ').join('+');
+  const newString = string.split(' ').join('');
   return newString;
 }
+
+// check window location hash, load page.
 
 // take search form text value and create a new string
 // call searchRecipe with the converted string as an argument
@@ -201,6 +203,12 @@ function renderRecipe(event, array) {
 }
 
 keywordSearch.addEventListener('click', searchForm);
+
+window.addEventListener('hashchange', e => {
+  if (data.dataView === 'search') {
+    renderRecipeCards(data.searchData);
+  }
+});
 
 // click event listener for the home icon which will
 // update classnames to display the feature component
