@@ -5,6 +5,13 @@ const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
 const homeIcon = document.querySelector('.fas.fa-home');
 
+/*
+  # Depending on the window hash, the user will be able to view and interact with
+  # certain features. Using local storage, we will render what has been searched
+  # previously. This will limit the amount of API Calls a user will use. Although,
+  # this does introduce performance issues.
+*/
+
 const hash = windowHashPage(window.location.hash);
 if (hash === '#search') {
   featureSection.className = 'feature-container hidden';
