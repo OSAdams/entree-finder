@@ -6,11 +6,9 @@ const resultDataList = document.querySelector('.result-data-list');
 const homeIcon = document.querySelector('.fas.fa-home');
 
 /*
-# This function will be called in searchForm() which is called when the user clicks
-# the search button. This function will ensure the argument passed is a string
-# of at least 3 characters. Once the input passes the input test, an XHR Request
-# will be sent to the API with the passed string argument, returning the parsed
-# JSON xhr.response object.
+  # searchRecipes will send an XHRHttpsRequest to our public API (Free Meal API)
+  # The response will be parsed and stored in our data.searchData object which
+  # will be used for the entirety of the app!
 */
 
 function searchRecipes(keyword) {
@@ -27,29 +25,15 @@ function searchRecipes(keyword) {
     data.dataView = 'search';
     featureSection.className = 'search-container hidden';
     resultSection.className = 'result-container';
-    // eslint-disable-next-line
-    console.log('searchRecipes data: ', data);
   });
   xhr.send();
 }
 
-// modify a string taken as the argument
-// assign value to a variable using split and join methods
-// for the argument passed
-// return value
 function windowHashString(string) {
   const newString = string.split(' ').join('');
   return newString;
 }
 
-// check window location hash, load page.
-
-// take search form text value and create a new string
-// call searchRecipe with the converted string as an argument
-// update window hash to display the converted string for search
-// reset the search form input value
-// update classNames of feature section container
-// and result section container
 function searchForm(event) {
   event.preventDefault();
   const convertedString = windowHashString(searchInput.value);
@@ -65,23 +49,14 @@ function searchForm(event) {
   }, 600);
 }
 
-// reset inner html
-// assign the results property of the argument passed to a variable
-// loop through recipes array to create a new element with
-// optional attributes by calling the newElement function
-// and assigning the value to properties inside of the newCard object
-// append elements to parent recipe card elements
-// add a click event listener to each recipe card created
-// in eventListener callback, call renderRecipes with event
-// and recipes array as arguments
-// we will use the value of the id attribute to render the full recipe
-// eslint-disable-next-line
+/*
+  # This function is called in our searchForm function. We will use data.searchData
+  # object value to render our data in the recipe cards
+*/
+
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
   const { meals } = array;
-  // eslint-disable-next-line
-  console.log('argument value: ', meals);
-  // eslint-disable-next-line
   for (let i = 0; i < meals.length; i++) {
     const newCard = {
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
@@ -104,13 +79,10 @@ function renderRecipeCards(array) {
   }
 }
 
-// function definition with a required element tag
-// and optional object parameter
-// return error if tag argument passed is not a string
-// or does not exist
-// create an element with options.tag
-// create and update attribute values with remaining property values
-// return the element value
+/*
+  # Create an element and set attributes with values
+*/
+
 function newElement(tag, options) {
   if (!tag || typeof tag !== 'string') return { error: 'The element tag is required' };
   const element = document.createElement(tag);
@@ -123,6 +95,11 @@ function newElement(tag, options) {
   }
   return element;
 }
+
+/*
+  # Grab the elements in the DOM that we are going to use to show the recipe.
+  # recipeData is an object that we will use for our recipe data
+*/
 
 const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
@@ -202,6 +179,11 @@ function renderRecipe(event, array) {
 
 }
 
+/*
+  # click event listener for the search button
+  # which will call the searchForm function
+*/
+
 keywordSearch.addEventListener('click', searchForm);
 
 window.addEventListener('hashchange', e => {
@@ -210,10 +192,6 @@ window.addEventListener('hashchange', e => {
   }
 });
 
-// click event listener for the home icon which will
-// update classnames to display the feature component
-// update window location hash to previous search string
-// update data.searchData to null
 homeIcon.addEventListener('click', event => {
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
@@ -221,21 +199,20 @@ homeIcon.addEventListener('click', event => {
   data.dataView = 'home';
 });
 
+/*
+  # This function is used if we have a string containing special characters that
+  # will negatively impact our rendered data.
+*/
+
 function removeTags(str) {
   const error = {};
   if (!str) {
     error.error = 'Invalid string argument';
     return error;
   } else { str = str.toString(); }
-  // Regular expression to identify HTML tags in
-  // the input string. Replacing the identified
-  // HTML tag with a null string.
   return str.replace(/(<([^>]+)>)/ig, '');
 }
 
-// this guy is going to populate the parent element in the dom with a container
-// containing buttons with event listeners
-// this is the prototype - looking to enhance this or move it into an object
 function recipeControls(parent, object) {
   const actionLib = {
     container: newElement('div', { className: 'action-container', id: 'recipe-actions' }),
@@ -260,5 +237,6 @@ function recipeControls(parent, object) {
  # NOTES: 1B 01-01-2024
  # Our data is now being used correctly. We need to ensure the data does NOT
  # reset when the user refreshes the page.
+ # The functionality of the app is working mostly, as intended. WIP.
  #
 */
