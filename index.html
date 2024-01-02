@@ -19,21 +19,27 @@
   <div class="main-container">
     <header class="navigation">
       <i class="fas fa-home"></i>
-      <h3>Vegan Recipes</h3>
+      <h3>Entree Finder</h3>
     </header>
     <main>
       <section class="feature-container">
         <div class="feature-components">
           <div class="search-form-container">
-            <form class="search-form" id="search-form">
-              <p class="instruction">
-                <label for="keyword">
-                  Type in a keyword to find a<br>Vegan Recipe!
-                </label>
-              </p>
-              <input class="search-input" type="text" name="keyword" id="keyword" placeholder="Enter one or more keyword(s)!" required>
-            </form>
-            <button class="def-button" type="submit" form="search-form" value="Submit" id="keyword-search">Find me a recipe!</button>
+            <div>
+              <h3>Welcome!</h3>
+              <p>Use the search form below to find a recipe!</p>
+            </div>
+            <div class="search-form-controls">
+              <form class="search-form" id="search-form">
+                <p class="instruction">
+                  <label for="keyword">
+                    Type in the main ingredient:
+                  </label>
+                </p>
+                <input class="search-input" type="text" name="keyword" id="keyword" placeholder="Enter one keyword" required>
+              </form>
+              <button class="def-button" type="submit" form="search-form" value="Submit" id="keyword-search">Find me a recipe!</button>
+            </div>
           </div>
         </div>
       </section>

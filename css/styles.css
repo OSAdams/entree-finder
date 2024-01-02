@@ -49,6 +49,10 @@
   height: 100%;
 }
 
+.feature-components h3 {
+  text-align: center;
+}
+
 .instruction {
   text-align: center;
   font-size: 20px;

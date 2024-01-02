@@ -1,5 +1,5 @@
 /* exported data */
-const savedDataJSON = localStorage.getItem('vegan-recipes-local-storage');
+const savedDataJSON = localStorage.getItem('entree-finder-local-storage');
 
 let data = {
   searchData: null,
@@ -15,5 +15,5 @@ if (savedDataJSON !== null) {
 
 window.addEventListener('beforeunload', e => {
   const dataJSON = JSON.stringify(data);
-  localStorage.setItem('vegan-recipes-local-storage', dataJSON);
+  localStorage.setItem('entree-finder-local-storage', dataJSON);
 });
