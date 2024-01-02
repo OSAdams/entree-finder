@@ -90,13 +90,15 @@ function renderRecipeCards(array) {
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
       title: newElement('h3', { textContent: meals[i].strMeal }),
       recipeDuration: newElement('p', { textContent: 'Prep Time: ' + meals[i].readyInMinutes + ' minutes' }),
-      recipeNutrition: newElement('p', { textContent: '<a href="https://panlasangpinoy.com/beef-asado/" target="__blank">Full Recipe</a>' }),
+      recipeSourceP: newElement('p'),
+      recipeSource: newElement('a', { href: 'https://panlasangpinoy.com/beef-asado/', target: '__blank', textContent: 'Click here for the Recipe Source' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
     newCard.recipeContext.appendChild(newCard.title);
     newCard.recipeContext.appendChild(newCard.recipeDuration);
-    newCard.recipeContext.appendChild(newCard.recipeNutrition);
+    newCard.recipeSourceP.appendChild(newCard.recipeSource);
+    newCard.recipeContext.appendChild(newCard.recipeSourceP);
     newCard.cardContainer.appendChild(newCard.recipeContext);
     newCard.cardContainer.addEventListener('click', e => {
       renderRecipe(e, meals);
@@ -107,7 +109,18 @@ function renderRecipeCards(array) {
 }
 
 /*
-  # Create an element and set attributes with values
+  # Create an element and assign values to the element attributes:
+  # calling newElement('element', { attribute: value } )
+  # newElement('h1', { className: 'foo', id: 'bar', textContent: 'fuz' })
+  #
+  # 02/01/2024
+  #
+  # GOALS:
+  # Support for anchor elements with href and target attributes.
+  #
+  # FUTURE UPDATES:
+  # Support form and button functionality for all Form tags and attributes
+  #
 */
 
 function newElement(tag, options) {
@@ -119,6 +132,8 @@ function newElement(tag, options) {
     if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
     if (options.textContent) element.textContent = options.textContent;
     if (options.innerHTML) element.innerHTML = options.innerHTML;
+    if (options.target) element.target = options.target;
+    if (options.href) element.href = options.href;
   }
   return element;
 }
