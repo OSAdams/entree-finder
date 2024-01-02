@@ -89,9 +89,9 @@ function renderRecipeCards(array) {
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
       title: newElement('h3', { textContent: meals[i].strMeal }),
-      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + meals[i].readyInMinutes + ' minutes' }),
+      recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
       recipeSourceP: newElement('p'),
-      recipeSource: newElement('a', { href: 'https://panlasangpinoy.com/beef-asado/', target: '__blank', textContent: 'Click here for the Recipe Source' }),
+      recipeSource: newElement('a', { href: 'https://panlasangpinoy.com/beef-asado/', target: '__blank', textContent: 'Click here for Recipe Source' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
@@ -116,7 +116,7 @@ function renderRecipeCards(array) {
   # 02/01/2024
   #
   # GOALS:
-  # Support for anchor elements with href and target attributes.
+  # Support for anchor elements with href and target attributes. !!
   #
   # FUTURE UPDATES:
   # Support form and button functionality for all Form tags and attributes
@@ -148,27 +148,29 @@ const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
 
 function renderRecipe(event, array) {
+  // eslint-disable-next-line
+  console.log('hello world');
   document.querySelector('.recipe-data-container').innerHTML = '';
   const cardID = event.currentTarget.getAttribute('id');
-  const recipeArray = array;
-  for (let i = 0; i < recipeArray.length; i++) {
-    if (parseInt(cardID) === recipeArray[i].id) {
+  // eslint-disable-next-line
+  console.log(cardID);
+  const meals = array;
+  for (let i = 0; i < meals.length; i++) {
+    if (cardID === meals[i].idMeal) {
       recipeData = null;
-      const clickedRecipe = recipeArray[i];
+      const clickedRecipe = meals[i];
       data.recipeData = clickedRecipe;
+      // eslint-disable-next-line
+      console.log('clickedRecipe: ', clickedRecipe);
       const fullRecipe = {
-        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.image }),
+        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.StrMealThumb }),
         titleContainer: newElement('div', { className: 'info-title' }),
-        title: newElement('h3', { textContent: clickedRecipe.title }),
+        title: newElement('h3', { textContent: clickedRecipe.strTitle }),
         ingredientHeader: newElement('h3', { textContent: 'Ingredients' }),
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
         instructionHeader: newElement('h3', { textContent: 'Instructions' }),
-        // use variable to display summary for future feature
-        // null
-        summary: newElement('div', { className: 'info-summary', innerHTML: removeTags(clickedRecipe.summary) }),
-        // end null
-        ingredients: clickedRecipe.nutrition.ingredients.slice(),
+        ingredients: newElement(''),
         instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
         instructionOl: newElement('ol'),
@@ -214,7 +216,7 @@ function renderRecipe(event, array) {
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
       recipeData = clickedRecipe;
       recipeControls(recipeDataContainer, recipeData);
-      recipeSection.className = 'recipe-container';
+      recipeSection.className = 'recipe-data-container';
       resultSection.className = 'result-container hidden';
     }
   }
@@ -240,6 +242,7 @@ homeIcon.addEventListener('click', e => {
   # will negatively impact our rendered data.
 */
 
+// eslint-disable-next-line
 function removeTags(str) {
   const error = {};
   if (!str) {
