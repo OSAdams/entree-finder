@@ -249,15 +249,3 @@ function recipeControls(parent, object) {
   actionLib.container.appendChild(actionLib.saveButton);
   parent.appendChild(actionLib.container);
 }
-
-/*
- # NOTES: 1A 30-12-2023
- # Updating the Order of Operations in the following functions:
- # searchRecipes, searchForm - awaiting tests.
- #
- # NOTES: 1B 01-01-2024
- # Our data is now being used correctly. We need to ensure the data does NOT
- # reset when the user refreshes the page.
- # The functionality of the app is working mostly, as intended. WIP.
- #
-*/
