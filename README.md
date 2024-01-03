@@ -5,12 +5,14 @@ Entree Finder is a dynamic HTML, CSS, and JavaScript application that helps user
 Users can search for a recipe using keywords. Keywords include cuisines, diets, ingredients, calories, total fats, spices, and more!
 
 I would like this to be open source as a learning experience for everyone. Feel free to contribute and share ideas!
+___
 
 ### Technologies Used
 
 [JavaScript](https://developer.mozilla.org/en-US/docs/Web/javascript)
 
 [AJAX (HTTPie Request)](https://developer.mozilla.org/en-US/docs/Glossary/Ajax)
+___
 
 ### Current Features
 
@@ -23,12 +25,14 @@ I would like this to be open source as a learning experience for everyone. Feel 
 • User can view the full recipe
 
 • User can save a recipe
+___
 
 ### Future Features
 
 • User can view a list of their saved recipes
 
 • User can comment notes to their saved recipes
+___
 
 ### Work in Progress
 
@@ -37,5 +41,6 @@ I would like this to be open source as a learning experience for everyone. Feel 
 • CSS Styling Update
 
 • Search Render Bug Fix
+___
 
 ### Latest Updates
