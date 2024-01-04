@@ -170,6 +170,10 @@ function renderRecipe(event, array) {
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
         instructionHeader: newElement('h3', { textContent: 'Instructions' }),
+        /*
+          # We will need a local function replacing recipeIngredients and
+          # recipeInstructions methods
+        */
         ingredients: newElement(''),
         instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
