@@ -5,8 +5,7 @@ main {
 
 .navigation {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
 }
 
 .main-container > main {
@@ -28,6 +27,7 @@ main {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .search-form-container > div > h3 {

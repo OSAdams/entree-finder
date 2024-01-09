@@ -86,6 +86,11 @@ function renderRecipeCards(array) {
   const { meals } = array;
   for (let i = 0; i < meals.length; i++) {
     const newCard = {
+      // conditional to change the font size for recipe tiles on recipes cards
+      // so if a string > 20 length font size = 0.8rem
+      // if string > 40 length font size = 0.6rem
+      //
+      // maybe define a local method for a conditional check
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
       title: newElement('h3', { textContent: meals[i].strMeal }),
