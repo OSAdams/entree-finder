@@ -84,20 +84,27 @@ function searchForm(event) {
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
   const { meals } = array;
+
+  /*
+    # stringSizeUpdate is a locally defined method to renderRecipeCards. This
+    # method will re-size our title font size depending on the length of the string
+    # value. Using conditionals, we will set the size of the title which will
+    # maintain application design consistency and responsiveness.
+  */
+
+  function stringSizeUpdate(string) {
+    const length = string.length;
+    const size = length > 21 ? '0.9rem' : length > 23 ? '0.8rem' : length > 24 ? '0.7rem' : '1rem';
+    return size;
+  }
   for (let i = 0; i < meals.length; i++) {
     const newCard = {
-      // conditional to change the font size for recipe tiles on recipes cards
-      // so if a string > 20 length font size = 0.8rem
-      // if string > 40 length font size = 0.6rem
-      //
-      // maybe define a local method for a conditional check
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
-      title: newElement('h3', { textContent: meals[i].strMeal }),
+      title: newElement('h3', { textContent: meals[i].strMeal, style: { property: 'fontSize', fontSize: stringSizeUpdate(meals[i].strMeal) } }),
       recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
       recipeSourceP: newElement('p'),
-      // UPDATING HREF VALUE BELOW
-      recipeSource: newElement('a', { href: 'https://panlasangpinoy.com/beef-asado/', target: '__blank', textContent: 'Click here for Recipe Source' }),
+      recipeSource: newElement('a', { href: meals[i].strMealThumb, target: '__blank', textContent: 'Click here for Recipe Source' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
@@ -140,6 +147,9 @@ function newElement(tag, options) {
     if (options.innerHTML) element.innerHTML = options.innerHTML;
     if (options.target) element.target = options.target;
     if (options.href) element.href = options.href;
+    if (options.style) {
+      if (options.style.property === 'fontSize') element.style.fontSize = options.style.fontSize;
+    }
   }
   return element;
 }
