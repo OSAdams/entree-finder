@@ -117,7 +117,7 @@ function renderRecipeCards(array) {
       title: newElement('h3', { textContent: meals[i].strMeal, style: { property: 'fontSize', fontSize: stringSizeUpdate(meals[i].strMeal) } }),
       recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
       recipeSourceP: newElement('p'),
-      recipeSource: newElement('a', { href: meals[i].strMealThumb, target: '__blank', textContent: 'Click here for Recipe Source' }),
+      recipeSource: newElement('a', { href: meals[i].strSource, target: '__blank', textContent: 'Click here for Recipe Source' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
