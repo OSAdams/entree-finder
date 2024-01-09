@@ -171,20 +171,14 @@ const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
 
 function renderRecipe(event, array) {
-  // eslint-disable-next-line
-  console.log('hello world');
   document.querySelector('.recipe-data-container').innerHTML = '';
   const cardID = event.currentTarget.getAttribute('id');
-  // eslint-disable-next-line
-  console.log(cardID);
   const meals = array;
   for (let i = 0; i < meals.length; i++) {
     if (cardID === meals[i].idMeal) {
       recipeData = null;
       const clickedRecipe = meals[i];
       data.recipeData = clickedRecipe;
-      // eslint-disable-next-line
-      console.log('clickedRecipe: ', clickedRecipe);
       const fullRecipe = {
         bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.StrMealThumb }),
         titleContainer: newElement('div', { className: 'info-title' }),
