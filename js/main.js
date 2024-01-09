@@ -79,6 +79,9 @@ function searchForm(event) {
 /*
   # This function is called in our searchForm function. We will use data.searchData
   # object value to render our data in the recipe cards
+  #
+  # FUTURE UPDATES: If there isn't a response, we will need to render an error
+  # page. WIP.
 */
 
 function renderRecipeCards(array) {
@@ -87,9 +90,9 @@ function renderRecipeCards(array) {
 
   /*
     # stringSizeUpdate is a locally defined method to renderRecipeCards. This
-    # method will re-size our title font size depending on the length of the string
-    # value. Using conditionals, we will set the size of the title which will
-    # maintain application design consistency and responsiveness.
+    # method will update our title font size depending on the length of the
+    # passed string value. Using conditionals, we will set the size of the title
+    # which will maintain application design consistency and responsiveness
   */
 
   function stringSizeUpdate(string) {
@@ -97,6 +100,16 @@ function renderRecipeCards(array) {
     const size = length > 21 ? '0.9rem' : length > 23 ? '0.8rem' : length > 24 ? '0.7rem' : '1rem';
     return size;
   }
+
+  /*
+    # We are looping through the passed array argument, which is local object
+    # assigned a value of our ajax call response. Using this data, we will
+    # manipulate the dom by creating unique recipe cards for unique recipes.
+    # Each recipe card is assigned a unique ID, this ID is the recipe ID will
+    # be used to isolate the recipe the user has clicked on with our locally
+    # defined click event listener. Each card will be rendered to the DOM.
+  */
+
   for (let i = 0; i < meals.length; i++) {
     const newCard = {
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
@@ -125,15 +138,9 @@ function renderRecipeCards(array) {
   # Create an element and assign values to the element attributes:
   # calling newElement('element', { attribute: value } )
   # newElement('h1', { className: 'foo', id: 'bar', textContent: 'fuz' })
-  #
-  # 02/01/2024
-  #
-  # GOALS:
-  # Support for anchor elements with href and target attributes. !!
-  #
-  # FUTURE UPDATES:
-  # Support form and button functionality for all Form tags and attributes
-  #
+  # calling with a style option
+  # newElement('element', { style: { property: value, value: string }})
+  # newElement('p', { style: { property: 'color', color: 'value' } })
 */
 
 function newElement(tag, options) {
