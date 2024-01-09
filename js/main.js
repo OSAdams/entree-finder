@@ -180,18 +180,19 @@ function renderRecipe(event, array) {
         instructionOl: newElement('ol'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
-        recipeIngredients: function (array) {
-          for (let i = 0; i < array.length; i++) {
-            const ingredient = {
-              li: newElement('li'),
-              name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
-              amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
-            };
-            ingredient.li.appendChild(ingredient.name);
-            ingredient.li.appendChild(ingredient.amount);
-            this.ingredientUl.appendChild(ingredient.li);
-          }
-        },
+        // recipeIngredients: function (array) {
+        //   for (let i = 0; i < array.length; i++) {
+        //     const ingredient = {
+        //       li: newElement('li'),
+        //       name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
+        //       amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
+        //     };
+        //     ingredient.li.appendChild(ingredient.name);
+        //     ingredient.li.appendChild(ingredient.amount);
+        //     this.ingredientUl.appendChild(ingredient.li);
+        //   }
+        // },
+        recipeIngredients: function (array) { 'true'; },
         recipeInstructions: function (array) {
           let step = 1;
           for (let i = 0; i < array.length; i++) {

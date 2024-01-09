@@ -105,14 +105,8 @@
 .result-container,
 .recipe-container {
   width: 100%;
-  height: 760px;
   padding-bottom: 10px;
-}
-
-.result-data-list,
-.recipe-data-container {
-  height: 100%;
-  overflow-y: auto;
+  height: 90vh;
 }
 
 .result-data-list {

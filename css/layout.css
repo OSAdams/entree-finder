@@ -9,6 +9,10 @@ main {
   align-items: center;
 }
 
+.main-container > main {
+  overflow-y: auto;
+}
+
 .feature-components {
   display: flex;
   flex-direction: column;
