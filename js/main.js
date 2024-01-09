@@ -96,6 +96,7 @@ function renderRecipeCards(array) {
       title: newElement('h3', { textContent: meals[i].strMeal }),
       recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
       recipeSourceP: newElement('p'),
+      // UPDATING HREF VALUE BELOW
       recipeSource: newElement('a', { href: 'https://panlasangpinoy.com/beef-asado/', target: '__blank', textContent: 'Click here for Recipe Source' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
