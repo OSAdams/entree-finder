@@ -168,7 +168,7 @@ function newElement(tag, options) {
 
 const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
-let recipeData = null;
+let recipeData = null; // eslint-disable-line
 
 function renderRecipe(event, array) {
   document.querySelector('.recipe-data-container').innerHTML = '';
@@ -178,11 +178,11 @@ function renderRecipe(event, array) {
     if (cardID === meals[i].idMeal) {
       recipeData = null;
       const clickedRecipe = meals[i];
-      data.recipeData = clickedRecipe;
+      recipeData = clickedRecipe;
       const fullRecipe = {
-        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.StrMealThumb }),
+        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.strMealThumb }),
         titleContainer: newElement('div', { className: 'info-title' }),
-        title: newElement('h3', { textContent: clickedRecipe.strTitle }),
+        title: newElement('h3', { textContent: clickedRecipe.strMeal }),
         ingredientHeader: newElement('h3', { textContent: 'Ingredients' }),
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
@@ -191,58 +191,53 @@ function renderRecipe(event, array) {
           # We will need a local function replacing recipeIngredients and
           # recipeInstructions methods
         */
-        ingredients: newElement(''),
-        instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
         instructionOl: newElement('ol'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
-        // recipeIngredients: function (array) {
-        //   for (let i = 0; i < array.length; i++) {
-        //     const ingredient = {
-        //       li: newElement('li'),
-        //       name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
-        //       amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
-        //     };
-        //     ingredient.li.appendChild(ingredient.name);
-        //     ingredient.li.appendChild(ingredient.amount);
-        //     this.ingredientUl.appendChild(ingredient.li);
-        //   }
-        // },
-        recipeIngredients: function (array) { 'true'; },
-        recipeInstructions: function (array) {
-          let step = 1;
-          for (let i = 0; i < array.length; i++) {
-            const number = newElement('span', { className: 'instruction-number', textContent: step + ') ' });
-            const instruction = {
-              li: newElement('li', { textContent: array[i].step })
-            };
-            instruction.li.prepend(number);
-            this.instructionOl.appendChild(instruction.li);
-            step++;
+        recipeIngredients: function (recipeObject) {
+          if (!recipeObject) return { error: 'iterable object literal required' };
+          const ingredientsObject = {};
+          for (const property in recipeObject) {
+            if (property.includes('str') && recipeObject[property].length >= 1) {
+              if (property.includes('Measure')) ingredientsObject[recipeObject[property]] = null;
+            }
           }
+          // eslint-disable-next-line
+          console.log(ingredientsObject);
         }
       };
+      // recipeInstructions: function (array) {
+      //     let step = 1;
+      //     for (let i = 0; i < array.length; i++) {
+      //       const number = newElement('span', { className: 'instruction-number', textContent: step + ') ' });
+      //       const instruction = {
+      //         li: newElement('li', { textContent: array[i].step })
+      //       };
+      //       instruction.li.prepend(number);
+      //       this.instructionOl.appendChild(instruction.li);
+      //       step++;
+      //     }
+      //   }
       fullRecipe.titleContainer.appendChild(fullRecipe.title);
       fullRecipe.containerOne.appendChild(fullRecipe.bgImage);
       fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
-      fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
-      fullRecipe.recipeInstructions(fullRecipe.instructions);
-      fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
-      fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
-      fullRecipe.recipeIngredients(fullRecipe.ingredients);
+      // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
+      // fullRecipe.recipeInstructions(fullRecipe.instructions);
+      // // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
+      // // fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
+      fullRecipe.recipeIngredients(clickedRecipe);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientHeader);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientUl);
       fullRecipe.containerTwo.appendChild(fullRecipe.ingredientContainer);
       recipeDataContainer.appendChild(fullRecipe.containerOne);
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
-      recipeData = clickedRecipe;
-      recipeControls(recipeDataContainer, recipeData);
+      recipeData = meals[i];
+      // recipeControls(recipeDataContainer, recipeData);
       recipeSection.className = 'recipe-data-container';
       resultSection.className = 'result-container hidden';
     }
   }
-
 }
 
 /*
@@ -274,6 +269,7 @@ function removeTags(str) {
   return str.replace(/(<([^>]+)>)/ig, '');
 }
 
+// eslint-disable-next-line
 function recipeControls(parent, object) {
   const actionLib = {
     container: newElement('div', { className: 'action-container', id: 'recipe-actions' }),
