@@ -111,13 +111,14 @@ function renderRecipeCards(array) {
   */
 
   for (let i = 0; i < meals.length; i++) {
+    const stringSource = !meals[i].strSource ? 'Unable to find Recipe Source' : 'Click here for Recipe Source';
     const newCard = {
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
       title: newElement('h3', { textContent: meals[i].strMeal, style: { property: 'fontSize', fontSize: stringSizeUpdate(meals[i].strMeal) } }),
       recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
       recipeSourceP: newElement('p'),
-      recipeSource: newElement('a', { href: meals[i].strSource, target: '__blank', textContent: 'Click here for Recipe Source' }),
+      recipeSource: newElement('a', { href: meals[i].strSource, target: '__blank', textContent: stringSource }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
@@ -198,6 +199,13 @@ function renderRecipe(event, array) {
         recipeIngredients: function (recipeObject) {
           if (!recipeObject) return { error: 'iterable object literal required' };
           const ingredientsObject = {};
+
+          /*
+            # main.js:202 Uncaught TypeError: Cannot read properties of null (reading 'length')
+            # at Object.recipeIngredients (main.js:202:68)
+            # at renderRecipe (main.js:229:18)
+            # at HTMLDivElement.<anonymous> (main.js:130:7
+          */
           for (const property in recipeObject) {
             if (property.includes('str') && recipeObject[property].length >= 1) {
               if (property.includes('Measure')) ingredientsObject[recipeObject[property]] = null;
