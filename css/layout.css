@@ -1,12 +1,27 @@
 main {
   display: flex;
   justify-content: center;
+  -ms-overflow-style: none;
+
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+
+  /* Firefox */
+}
+
+main::-webkit-scrollbar {
+  display: none;
+
+  /* Safari and Chrome */
 }
 
 .navigation {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
+}
+
+.main-container > main {
+  overflow-y: auto;
 }
 
 .feature-components {
@@ -24,6 +39,7 @@ main {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .search-form-container > div > h3 {
@@ -61,6 +77,15 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.recipe-card-instructions {
+  text-align: center;
+  margin: 1rem;
+}
+
+.recipe-card-instructions * {
+  margin: 2rem 0;
 }
 
 @media screen and (min-width: 800px) {

@@ -79,24 +79,52 @@ function searchForm(event) {
 /*
   # This function is called in our searchForm function. We will use data.searchData
   # object value to render our data in the recipe cards
+  #
+  # FUTURE UPDATES: If there isn't a response, we will need to render an error
+  # page. WIP.
 */
 
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
   const { meals } = array;
+
+  /*
+    # stringSizeUpdate is a locally defined method to renderRecipeCards. This
+    # method will update our title font size depending on the length of the
+    # passed string value. Using conditionals, we will set the size of the title
+    # which will maintain application design consistency and responsiveness
+  */
+
+  function stringSizeUpdate(string) {
+    const length = string.length;
+    const size = length > 21 ? '0.9rem' : length > 23 ? '0.8rem' : length > 24 ? '0.7rem' : '1rem';
+    return size;
+  }
+
+  /*
+    # We are looping through the passed array argument, which is local object
+    # assigned a value of our ajax call response. Using this data, we will
+    # manipulate the dom by creating unique recipe cards for unique recipes.
+    # Each recipe card is assigned a unique ID, this ID is the recipe ID will
+    # be used to isolate the recipe the user has clicked on with our locally
+    # defined click event listener. Each card will be rendered to the DOM.
+  */
+
   for (let i = 0; i < meals.length; i++) {
     const newCard = {
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
-      title: newElement('h3', { textContent: meals[i].strMeal }),
-      recipeDuration: newElement('p', { textContent: 'Prep Time: ' + meals[i].readyInMinutes + ' minutes' }),
-      recipeNutrition: newElement('p', { textContent: '<a href="https://panlasangpinoy.com/beef-asado/" target="__blank">Full Recipe</a>' }),
+      title: newElement('h3', { textContent: meals[i].strMeal, style: { property: 'fontSize', fontSize: stringSizeUpdate(meals[i].strMeal) } }),
+      recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
+      recipeSourceP: newElement('p'),
+      recipeSource: newElement('a', { href: meals[i].strSource, target: '__blank', textContent: 'Click here for Recipe Source' }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
     newCard.recipeContext.appendChild(newCard.title);
     newCard.recipeContext.appendChild(newCard.recipeDuration);
-    newCard.recipeContext.appendChild(newCard.recipeNutrition);
+    newCard.recipeSourceP.appendChild(newCard.recipeSource);
+    newCard.recipeContext.appendChild(newCard.recipeSourceP);
     newCard.cardContainer.appendChild(newCard.recipeContext);
     newCard.cardContainer.addEventListener('click', e => {
       renderRecipe(e, meals);
@@ -107,7 +135,12 @@ function renderRecipeCards(array) {
 }
 
 /*
-  # Create an element and set attributes with values
+  # Create an element and assign values to the element attributes:
+  # calling newElement('element', { attribute: value } )
+  # newElement('h1', { className: 'foo', id: 'bar', textContent: 'fuz' })
+  # calling with a style option
+  # newElement('element', { style: { property: value, value: string }})
+  # newElement('p', { style: { property: 'color', color: 'value' } })
 */
 
 function newElement(tag, options) {
@@ -119,6 +152,11 @@ function newElement(tag, options) {
     if (options.image) element.style.backgroundImage = ('url(' + options.image + ')');
     if (options.textContent) element.textContent = options.textContent;
     if (options.innerHTML) element.innerHTML = options.innerHTML;
+    if (options.target) element.target = options.target;
+    if (options.href) element.href = options.href;
+    if (options.style) {
+      if (options.style.property === 'fontSize') element.style.fontSize = options.style.fontSize;
+    }
   }
   return element;
 }
@@ -135,42 +173,43 @@ let recipeData = null;
 function renderRecipe(event, array) {
   document.querySelector('.recipe-data-container').innerHTML = '';
   const cardID = event.currentTarget.getAttribute('id');
-  const recipeArray = array;
-  for (let i = 0; i < recipeArray.length; i++) {
-    if (parseInt(cardID) === recipeArray[i].id) {
+  const meals = array;
+  for (let i = 0; i < meals.length; i++) {
+    if (cardID === meals[i].idMeal) {
       recipeData = null;
-      const clickedRecipe = recipeArray[i];
+      const clickedRecipe = meals[i];
       data.recipeData = clickedRecipe;
       const fullRecipe = {
-        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.image }),
+        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.StrMealThumb }),
         titleContainer: newElement('div', { className: 'info-title' }),
-        title: newElement('h3', { textContent: clickedRecipe.title }),
+        title: newElement('h3', { textContent: clickedRecipe.strTitle }),
         ingredientHeader: newElement('h3', { textContent: 'Ingredients' }),
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
         instructionHeader: newElement('h3', { textContent: 'Instructions' }),
-        // use variable to display summary for future feature
-        // null
-        summary: newElement('div', { className: 'info-summary', innerHTML: removeTags(clickedRecipe.summary) }),
-        // end null
-        ingredients: clickedRecipe.nutrition.ingredients.slice(),
+        /*
+          # We will need a local function replacing recipeIngredients and
+          # recipeInstructions methods
+        */
+        ingredients: newElement(''),
         instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
         instructionOl: newElement('ol'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
-        recipeIngredients: function (array) {
-          for (let i = 0; i < array.length; i++) {
-            const ingredient = {
-              li: newElement('li'),
-              name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
-              amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
-            };
-            ingredient.li.appendChild(ingredient.name);
-            ingredient.li.appendChild(ingredient.amount);
-            this.ingredientUl.appendChild(ingredient.li);
-          }
-        },
+        // recipeIngredients: function (array) {
+        //   for (let i = 0; i < array.length; i++) {
+        //     const ingredient = {
+        //       li: newElement('li'),
+        //       name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
+        //       amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
+        //     };
+        //     ingredient.li.appendChild(ingredient.name);
+        //     ingredient.li.appendChild(ingredient.amount);
+        //     this.ingredientUl.appendChild(ingredient.li);
+        //   }
+        // },
+        recipeIngredients: function (array) { 'true'; },
         recipeInstructions: function (array) {
           let step = 1;
           for (let i = 0; i < array.length; i++) {
@@ -199,7 +238,7 @@ function renderRecipe(event, array) {
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
       recipeData = clickedRecipe;
       recipeControls(recipeDataContainer, recipeData);
-      recipeSection.className = 'recipe-container';
+      recipeSection.className = 'recipe-data-container';
       resultSection.className = 'result-container hidden';
     }
   }
@@ -225,6 +264,7 @@ homeIcon.addEventListener('click', e => {
   # will negatively impact our rendered data.
 */
 
+// eslint-disable-next-line
 function removeTags(str) {
   const error = {};
   if (!str) {
