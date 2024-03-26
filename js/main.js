@@ -239,7 +239,7 @@ function renderRecipe(event, array) {
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
       recipeData = meals[i];
       recipeControls(recipeDataContainer, recipeData);
-      recipeSection.className = 'recipe-data-container';
+      recipeSection.className = 'full-recipe-container';
       resultSection.className = 'result-container hidden';
     }
   }
@@ -257,6 +257,7 @@ homeIcon.addEventListener('click', e => {
   window.location.hash = '#home?';
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
+  recipeSection.className = 'recipe-container hidden';
 });
 
 /*
