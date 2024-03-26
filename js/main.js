@@ -169,7 +169,7 @@ function newElement(tag, options) {
 
 const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
-let recipeData = null; // eslint-disable-line
+let recipeData = null;
 
 function renderRecipe(event, array) {
   document.querySelector('.recipe-data-container').innerHTML = '';
@@ -275,7 +275,6 @@ function removeTags(str) {
   return str.replace(/(<([^>]+)>)/ig, '');
 }
 
-// eslint-disable-next-line
 function recipeControls(parent, object) {
   const actionLib = {
     container: newElement('div', { className: 'action-container', id: 'recipe-actions' }),
