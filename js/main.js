@@ -3,7 +3,9 @@ const keywordSearch = document.querySelector('#keyword-search');
 const featureSection = document.querySelector('.feature-container');
 const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
-const homeIcon = document.querySelector('.fas.fa-home');
+const recipeContainer = document.querySelector('.recipe-container');
+const siteTitle = document.querySelector('.site-title');
+const siteMap = document.querySelector('.site-map');
 
 /*
   # Depending on the window hash, the user will be able to view and interact with
@@ -12,16 +14,28 @@ const homeIcon = document.querySelector('.fas.fa-home');
   # this does introduce performance issues due to using localStorage.
 */
 
-const hash = windowHashPage(window.location.hash);
-if (hash === '#search') {
-  featureSection.className = 'feature-container hidden';
-  resultSection.className = 'result-container';
-  renderRecipeCards(data.searchData);
-}
-if (hash === '#home') {
-  featureSection.className = 'feature-container';
-  resultSection.className = 'result-container hidden';
-}
+window.addEventListener('hashchange', e => {
+  const hash = windowHashPage(window.location.hash);
+  if (hash === '#search') {
+    featureSection.className = 'feature-container hidden';
+    resultSection.className = 'result-container';
+    recipeContainer.className = 'recipe-container hidden';
+    siteMap.textContent = 'Search Results';
+    renderRecipeCards(data.searchData);
+  }
+  if (hash === '#recipe') {
+    featureSection.className = 'feature-container hidden';
+    resultSection.className = 'result-container hidden';
+    recipeContainer.className = 'recipe-container';
+    siteMap.textContent = 'Full Recipe';
+  }
+  if (hash === '#home') {
+    featureSection.className = 'feature-container';
+    resultSection.className = 'result-container hidden';
+    recipeContainer.className = 'recipe-container hidden';
+    siteMap.textContent = 'Full Recipe';
+  }
+});
 
 /*
   # searchRecipes will send an XHRHttpsRequest to our public API (Free Meal API)
@@ -166,8 +180,6 @@ function newElement(tag, options) {
   # Grab the elements in the DOM that we are going to use to show the recipe.
   # recipeData is an object that we will use for our recipe data
 */
-
-const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
 
@@ -180,6 +192,7 @@ function renderRecipe(event, array) {
       recipeData = null;
       const clickedRecipe = meals[i];
       recipeData = clickedRecipe;
+      data.recipeData = recipeData;
       const fullRecipe = {
         bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.strMealThumb }),
         titleContainer: newElement('div', { className: 'info-title' }),
@@ -239,8 +252,7 @@ function renderRecipe(event, array) {
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
       recipeData = meals[i];
       recipeControls(recipeDataContainer, recipeData);
-      recipeSection.className = 'full-recipe-container';
-      resultSection.className = 'result-container hidden';
+      window.location.hash = '#recipe?id=' + cardID;
     }
   }
 }
@@ -252,12 +264,12 @@ function renderRecipe(event, array) {
 
 keywordSearch.addEventListener('click', searchForm);
 
-homeIcon.addEventListener('click', e => {
+siteTitle.addEventListener('click', e => {
   data.dataView = 'home';
   window.location.hash = '#home?';
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
-  recipeSection.className = 'recipe-container hidden';
+  recipeContainer.className = 'recipe-container hidden';
 });
 
 /*

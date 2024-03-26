@@ -11,7 +11,8 @@ main::-webkit-scrollbar {
 
 .navigation {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .feature-components {
@@ -80,7 +81,7 @@ main::-webkit-scrollbar {
 
 div.recipe-data-container {
   overflow-y: auto;
-  max-height: 800px;
+  max-height: 100%;
   scrollbar-width: none;
 }
 
