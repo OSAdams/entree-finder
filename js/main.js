@@ -198,21 +198,29 @@ function renderRecipe(event, array) {
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
         recipeIngredients: function (recipeObject) {
           if (!recipeObject) return { error: 'iterable object literal required' };
-          const ingredientsObject = {};
-
-          /*
-            # main.js:202 Uncaught TypeError: Cannot read properties of null (reading 'length')
-            # at Object.recipeIngredients (main.js:202:68)
-            # at renderRecipe (main.js:229:18)
-            # at HTMLDivElement.<anonymous> (main.js:130:7
-          */
-          for (const property in recipeObject) {
-            if (property.includes('str') && recipeObject[property].length >= 1) {
-              if (property.includes('Measure')) ingredientsObject[recipeObject[property]] = null;
+          const argObject = recipeObject;
+          const nameArray = [];
+          const measurementArray = [];
+          for (const property in argObject) {
+            if (property.includes('Ingredient') && argObject[property].length >= 1) {
+              nameArray.push(argObject[property]);
             }
           }
-          // eslint-disable-next-line
-          console.log(ingredientsObject);
+          for (const property in argObject) {
+            if (property.includes('Measure') && argObject[property].length >= 1) {
+              measurementArray.push(argObject[property]);
+            }
+          }
+          for (let i = 0; i < nameArray.length; i++) {
+            const ingredient = {
+              li: newElement('li'),
+              name: newElement('span', { className: 'ingr-name', textContent: nameArray[i] + ': ' }),
+              amount: newElement('span', { className: 'ingr-amount', textContent: measurementArray[i] })
+            };
+            ingredient.li.appendChild(ingredient.name);
+            ingredient.li.appendChild(ingredient.amount);
+            this.ingredientUl.appendChild(ingredient.li);
+          }
         }
       };
       // recipeInstructions: function (array) {
@@ -232,8 +240,8 @@ function renderRecipe(event, array) {
       fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
       // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
       // fullRecipe.recipeInstructions(fullRecipe.instructions);
-      // // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
-      // // fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
+      // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
+      fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
       fullRecipe.recipeIngredients(clickedRecipe);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientHeader);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientUl);
@@ -241,7 +249,7 @@ function renderRecipe(event, array) {
       recipeDataContainer.appendChild(fullRecipe.containerOne);
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
       recipeData = meals[i];
-      // recipeControls(recipeDataContainer, recipeData);
+      recipeControls(recipeDataContainer, recipeData);
       recipeSection.className = 'recipe-data-container';
       resultSection.className = 'result-container hidden';
     }
