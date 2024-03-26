@@ -188,12 +188,8 @@ function renderRecipe(event, array) {
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
         instructionHeader: newElement('h3', { textContent: 'Instructions' }),
-        /*
-          # We will need a local function replacing recipeIngredients and
-          # recipeInstructions methods
-        */
         ingredientUl: newElement('ul'),
-        instructionOl: newElement('ol'),
+        instructionDiv: newElement('div'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
         recipeIngredients: function (recipeObject) {
@@ -221,26 +217,19 @@ function renderRecipe(event, array) {
             ingredient.li.appendChild(ingredient.amount);
             this.ingredientUl.appendChild(ingredient.li);
           }
+        },
+        recipeInstructions: function (recipeObject) {
+          const objInstructions = recipeObject.strInstructions;
+          const instructions = newElement('p', { textContent: objInstructions });
+          this.instructionDiv.appendChild(instructions);
+          this.instructionContainer.appendChild(this.instructionDiv);
         }
       };
-      // recipeInstructions: function (array) {
-      //     let step = 1;
-      //     for (let i = 0; i < array.length; i++) {
-      //       const number = newElement('span', { className: 'instruction-number', textContent: step + ') ' });
-      //       const instruction = {
-      //         li: newElement('li', { textContent: array[i].step })
-      //       };
-      //       instruction.li.prepend(number);
-      //       this.instructionOl.appendChild(instruction.li);
-      //       step++;
-      //     }
-      //   }
       fullRecipe.titleContainer.appendChild(fullRecipe.title);
       fullRecipe.containerOne.appendChild(fullRecipe.bgImage);
       fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
-      // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
-      // fullRecipe.recipeInstructions(fullRecipe.instructions);
-      // fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
+      fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
+      fullRecipe.recipeInstructions(clickedRecipe);
       fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
       fullRecipe.recipeIngredients(clickedRecipe);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientHeader);
