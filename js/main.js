@@ -33,7 +33,7 @@ window.addEventListener('hashchange', e => {
     featureSection.className = 'feature-container';
     resultSection.className = 'result-container hidden';
     recipeContainer.className = 'recipe-container hidden';
-    siteMap.textContent = 'Full Recipe';
+    siteMap.textContent = 'Landing Page';
   }
 });
 
