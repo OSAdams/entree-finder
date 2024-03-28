@@ -10,10 +10,8 @@ const modalContainer = document.querySelector('.modal-container');
 const modalContent = document.querySelector('.modal-content');
 
 /*
-  # Depending on the window hash, the user will be able to view and interact with
-  # certain features. Using local storage, we will render what has been searched
-  # previously. This will limit the amount of API Calls a user will use. Although,
-  # this does introduce performance issues due to using localStorage.
+  # Event listener for window hash changes triggering the callback function
+  # for DOM Manipulation
 */
 
 window.addEventListener('hashchange', e => {
@@ -40,9 +38,8 @@ window.addEventListener('hashchange', e => {
 });
 
 /*
-  # searchRecipes will send an XHRHttpsRequest to our public API (Free Meal API)
-  # The response will be parsed and stored in our data.searchData object which
-  # will be used for the entirety of the app!
+  # Send a get request to our API server using the string argument passed
+  # from our users input
 */
 
 function searchRecipes(keyword) {
@@ -63,8 +60,7 @@ function searchRecipes(keyword) {
 }
 
 /*
-  # Change this into a window hash updating function. We can use this to control
-  # what data will render.
+  # Grab the page value from the window hash
 */
 
 function windowHashPage(string) {
@@ -74,10 +70,21 @@ function windowHashPage(string) {
   return page;
 }
 
+/*
+  # Update the user input string, removing spaces and returning the updated string
+  # value for our xhr request
+*/
+
 function windowHashString(string) {
   const newString = string.split(' ').join('');
   return newString;
 }
+
+/*
+  # User input value pre-defined callback function. call searchRecipes for an
+  # xhr get request. Utilize setTimeout for api request and response. Update
+  # local object for data rendering.
+*/
 
 function searchForm(event) {
   event.preventDefault();
@@ -96,11 +103,8 @@ function searchForm(event) {
 }
 
 /*
-  # This function is called in our searchForm function. We will use data.searchData
-  # object value to render our data in the recipe cards
-  #
-  # FUTURE UPDATES: If there isn't a response, we will need to render an error
-  # page. WIP.
+  # Using the data saved from our xhr get request, X recipe cards are generated.
+  # Depending on the total amount of recipes our xhr get request returned
 */
 
 function renderRecipeCards(array) {
@@ -115,10 +119,8 @@ function renderRecipeCards(array) {
   }
 
   /*
-    # stringSizeUpdate is a locally defined method to renderRecipeCards. This
-    # method will update our title font size depending on the length of the
-    # passed string value. Using conditionals, we will set the size of the title
-    # which will maintain application design consistency and responsiveness
+    # This function is to re-size our text depending on the length of the string
+    # passed as the argument. This return value is used for the recipe titles
   */
 
   function stringSizeUpdate(string) {
@@ -128,12 +130,9 @@ function renderRecipeCards(array) {
   }
 
   /*
-    # We are looping through the passed array argument, which is local object
-    # assigned a value of our ajax call response. Using this data, we will
-    # manipulate the dom by creating unique recipe cards for unique recipes.
-    # Each recipe card is assigned a unique ID, this ID is the recipe ID will
-    # be used to isolate the recipe the user has clicked on with our locally
-    # defined click event listener. Each card will be rendered to the DOM.
+    # Loop through our recipe return object, presenting the user an image, title,
+    # and recipe source. Each card has a click event listener which will render the
+    # instructions and ingredients with user interaction.
   */
 
   for (let i = 0; i < meals.length; i++) {
@@ -164,12 +163,8 @@ function renderRecipeCards(array) {
 }
 
 /*
-  # Create an element and assign values to the element attributes:
-  # calling newElement('element', { attribute: value } )
-  # newElement('h1', { className: 'foo', id: 'bar', textContent: 'fuz' })
-  # calling with a style option
-  # newElement('element', { style: { property: value, value: string }})
-  # newElement('p', { style: { property: 'color', color: 'value' } })
+  # This function is designed to help create html elements inside local objects.
+  # newElement('tag', { className: 'container', ... })
 */
 
 function newElement(tag, options) {
@@ -191,8 +186,10 @@ function newElement(tag, options) {
 }
 
 /*
-  # Grab the elements in the DOM that we are going to use to show the recipe.
-  # recipeData is an object that we will use for our recipe data
+  # When the user clicks on a recipe card, the DOM is manipulated and now
+  # our web application will strictly display the full recipe. With user controls,
+  # the user can save the recipe, storing the recipe in local storage for future
+  # use.
 */
 const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
@@ -273,8 +270,8 @@ function renderRecipe(event, array) {
 }
 
 /*
-  # click event listener for the search button
-  # which will call the searchForm function
+  # Call searchForm which will send an xhr get request and parse the response.
+  # siteTitle event listener is to return to the landing page per user interaction
 */
 
 keywordSearch.addEventListener('click', searchForm);
