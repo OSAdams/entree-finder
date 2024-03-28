@@ -2,8 +2,6 @@
 
 Entree Finder is a dynamic HTML, CSS, and JavaScript application that helps users search for an Entree Recipes!
 
-***
-
 ## Why I built this
 
 As a former Chef, I wanted to build an application that I wish I could have utilized during heavy volume food preparation work loads.
@@ -36,6 +34,9 @@ Try the application live at [https://osadams.github.io/ajax-project/](https://os
 
 ## Preview
 
+![readme-preview-image-1](https://github.com/OSAdams/ajax-project/assets/76730244/cb62cc60-8f65-494c-a8a3-aa73388d2f3a)
+
+![readme-preview-image-2](https://github.com/OSAdams/ajax-project/assets/76730244/2bf69439-7894-4e6d-a3b5-9849b207c39a)
 
 ### Current Features
 
@@ -58,8 +59,8 @@ Try the application live at [https://osadams.github.io/ajax-project/](https://os
 1. Clone the repository
 
     ```shell
-    git clone https://github.com/Learning-Fuze/sgt-react
-    cd sgt-react
+    git clone https://github.com/OSAdams/entree-finder.git
+    cd entree-finder
     ```
 
 2. Install all dependencies with NPM
@@ -68,10 +69,10 @@ Try the application live at [https://osadams.github.io/ajax-project/](https://os
     npm install
     ```
 
-3. Start the project. Once started you can view the application by opening http://localhost:5500/index.html#home? in your browser
+3. Start the project. Once started you can view the application by pasting the below link into the address bar
 
-    ```vscode
-    Right click index.html and select Open in Live Reload
+    ```shell
+    http://localhost:5500/index.html#home?
     ```
 
 ### Work in Progress
