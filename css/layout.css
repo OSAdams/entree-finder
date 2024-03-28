@@ -121,7 +121,7 @@ section.modal-container {
   .recipe-block > *,
   .recipe-block-two > * {
     width: 50%;
-    padding: 5px;
+    padding: 0.3125rem;
   }
 
   .recipe-block > .info-title {
@@ -131,6 +131,6 @@ section.modal-container {
 
   .recipe-block > .info-image {
     padding: 0;
-    margin: 5px;
+    margin: 0.3125rem;
   }
 }
