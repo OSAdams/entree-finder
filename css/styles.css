@@ -28,7 +28,7 @@
   top: 25px;
 }
 
-.navigation > h3,
+.navigation > h1,
 .info-title h3 {
   font-family:
     "Playfair Display",
@@ -69,7 +69,7 @@
   background-color: #243a73;
   border-radius: 3px;
   border: none;
-  color: #f0f0f0;
+  color: #f2ebe9;
   cursor: pointer;
 }
 
@@ -97,9 +97,15 @@
 
 .def-button,
 .search-input,
-.fas.fa-home,
+.navigation > h1,
 .recipe-card {
   cursor: pointer;
+  transition: color 0.5s ease-in-out;
+}
+
+button:hover,
+.navigation > h1:hover {
+  color: #788dc3;
 }
 
 .result-container,

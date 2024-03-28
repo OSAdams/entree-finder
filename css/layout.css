@@ -1,12 +1,6 @@
 main {
   display: flex;
   justify-content: center;
-  -ms-overflow-style: none;
-
-  /* Internet Explorer 10+ */
-  scrollbar-width: none;
-
-  /* Firefox */
 }
 
 main::-webkit-scrollbar {
@@ -17,11 +11,8 @@ main::-webkit-scrollbar {
 
 .navigation {
   display: flex;
-  justify-content: right;
-}
-
-.main-container > main {
-  overflow-y: auto;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .feature-components {
@@ -86,6 +77,12 @@ main::-webkit-scrollbar {
 
 .recipe-card-instructions * {
   margin: 2rem 0;
+}
+
+div.recipe-data-container {
+  overflow-y: auto;
+  max-height: 100%;
+  scrollbar-width: none;
 }
 
 @media screen and (min-width: 800px) {

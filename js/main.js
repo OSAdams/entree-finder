@@ -3,7 +3,9 @@ const keywordSearch = document.querySelector('#keyword-search');
 const featureSection = document.querySelector('.feature-container');
 const resultSection = document.querySelector('.result-container');
 const resultDataList = document.querySelector('.result-data-list');
-const homeIcon = document.querySelector('.fas.fa-home');
+const recipeContainer = document.querySelector('.recipe-container');
+const siteTitle = document.querySelector('.site-title');
+const siteMap = document.querySelector('.site-map');
 
 /*
   # Depending on the window hash, the user will be able to view and interact with
@@ -12,16 +14,28 @@ const homeIcon = document.querySelector('.fas.fa-home');
   # this does introduce performance issues due to using localStorage.
 */
 
-const hash = windowHashPage(window.location.hash);
-if (hash === '#search') {
-  featureSection.className = 'feature-container hidden';
-  resultSection.className = 'result-container';
-  renderRecipeCards(data.searchData);
-}
-if (hash === '#home') {
-  featureSection.className = 'feature-container';
-  resultSection.className = 'result-container hidden';
-}
+window.addEventListener('hashchange', e => {
+  const hash = windowHashPage(window.location.hash);
+  if (hash === '#search') {
+    featureSection.className = 'feature-container hidden';
+    resultSection.className = 'result-container';
+    recipeContainer.className = 'recipe-container hidden';
+    siteMap.textContent = 'Search Results';
+    renderRecipeCards(data.searchData);
+  }
+  if (hash === '#recipe') {
+    featureSection.className = 'feature-container hidden';
+    resultSection.className = 'result-container hidden';
+    recipeContainer.className = 'recipe-container';
+    siteMap.textContent = 'Full Recipe';
+  }
+  if (hash === '#home') {
+    featureSection.className = 'feature-container';
+    resultSection.className = 'result-container hidden';
+    recipeContainer.className = 'recipe-container hidden';
+    siteMap.textContent = 'Full Recipe';
+  }
+});
 
 /*
   # searchRecipes will send an XHRHttpsRequest to our public API (Free Meal API)
@@ -111,13 +125,14 @@ function renderRecipeCards(array) {
   */
 
   for (let i = 0; i < meals.length; i++) {
+    const stringSource = !meals[i].strSource ? 'Unable to find Recipe Source' : 'Click here for Recipe Source';
     const newCard = {
       cardContainer: newElement('div', { className: 'recipe-card', id: meals[i].idMeal }),
       bgImage: newElement('div', { className: 'recipe-img', image: meals[i].strMealThumb }),
       title: newElement('h3', { textContent: meals[i].strMeal, style: { property: 'fontSize', fontSize: stringSizeUpdate(meals[i].strMeal) } }),
       recipeDuration: newElement('p', { textContent: meals[i].strArea + ' cousine' }),
       recipeSourceP: newElement('p'),
-      recipeSource: newElement('a', { href: meals[i].strSource, target: '__blank', textContent: 'Click here for Recipe Source' }),
+      recipeSource: newElement('a', { href: meals[i].strSource, target: '__blank', textContent: stringSource }),
       recipeContext: newElement('div', { className: 'recipe-context' })
     };
     newCard.cardContainer.appendChild(newCard.bgImage);
@@ -165,8 +180,6 @@ function newElement(tag, options) {
   # Grab the elements in the DOM that we are going to use to show the recipe.
   # recipeData is an object that we will use for our recipe data
 */
-
-const recipeSection = document.querySelector('.recipe-container');
 const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
 
@@ -178,71 +191,70 @@ function renderRecipe(event, array) {
     if (cardID === meals[i].idMeal) {
       recipeData = null;
       const clickedRecipe = meals[i];
-      data.recipeData = clickedRecipe;
+      recipeData = clickedRecipe;
+      data.recipeData = recipeData;
       const fullRecipe = {
-        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.StrMealThumb }),
+        bgImage: newElement('div', { className: 'info-image', image: clickedRecipe.strMealThumb }),
         titleContainer: newElement('div', { className: 'info-title' }),
-        title: newElement('h3', { textContent: clickedRecipe.strTitle }),
+        title: newElement('h3', { textContent: clickedRecipe.strMeal }),
         ingredientHeader: newElement('h3', { textContent: 'Ingredients' }),
         ingredientContainer: newElement('div', { className: 'ingredients-data' }),
         instructionContainer: newElement('div', { className: 'instruction-data' }),
         instructionHeader: newElement('h3', { textContent: 'Instructions' }),
-        /*
-          # We will need a local function replacing recipeIngredients and
-          # recipeInstructions methods
-        */
-        ingredients: newElement(''),
-        instructions: clickedRecipe.analyzedInstructions[0].steps.slice(),
         ingredientUl: newElement('ul'),
-        instructionOl: newElement('ol'),
+        instructionDiv: newElement('div'),
         containerOne: newElement('div', { className: 'recipe-block' }),
         containerTwo: newElement('div', { className: 'recipe-block-two' }),
-        // recipeIngredients: function (array) {
-        //   for (let i = 0; i < array.length; i++) {
-        //     const ingredient = {
-        //       li: newElement('li'),
-        //       name: newElement('span', { className: 'ingr-name', textContent: array[i].name + ': ' }),
-        //       amount: newElement('span', { className: 'ingr-amount', textContent: array[i].amount + ' ' + array[i].unit })
-        //     };
-        //     ingredient.li.appendChild(ingredient.name);
-        //     ingredient.li.appendChild(ingredient.amount);
-        //     this.ingredientUl.appendChild(ingredient.li);
-        //   }
-        // },
-        recipeIngredients: function (array) { 'true'; },
-        recipeInstructions: function (array) {
-          let step = 1;
-          for (let i = 0; i < array.length; i++) {
-            const number = newElement('span', { className: 'instruction-number', textContent: step + ') ' });
-            const instruction = {
-              li: newElement('li', { textContent: array[i].step })
-            };
-            instruction.li.prepend(number);
-            this.instructionOl.appendChild(instruction.li);
-            step++;
+        recipeIngredients: function (recipeObject) {
+          if (!recipeObject) return { error: 'iterable object literal required' };
+          const argObject = recipeObject;
+          const nameArray = [];
+          const measurementArray = [];
+          for (const property in argObject) {
+            if (property.includes('Ingredient') && argObject[property].length >= 1) {
+              nameArray.push(argObject[property]);
+            }
           }
+          for (const property in argObject) {
+            if (property.includes('Measure') && argObject[property].length >= 1) {
+              measurementArray.push(argObject[property]);
+            }
+          }
+          for (let i = 0; i < nameArray.length; i++) {
+            const ingredient = {
+              li: newElement('li'),
+              name: newElement('span', { className: 'ingr-name', textContent: nameArray[i] + ': ' }),
+              amount: newElement('span', { className: 'ingr-amount', textContent: measurementArray[i] })
+            };
+            ingredient.li.appendChild(ingredient.name);
+            ingredient.li.appendChild(ingredient.amount);
+            this.ingredientUl.appendChild(ingredient.li);
+          }
+        },
+        recipeInstructions: function (recipeObject) {
+          const objInstructions = recipeObject.strInstructions;
+          const instructions = newElement('p', { textContent: objInstructions });
+          this.instructionDiv.appendChild(instructions);
+          this.instructionContainer.appendChild(this.instructionDiv);
         }
       };
       fullRecipe.titleContainer.appendChild(fullRecipe.title);
       fullRecipe.containerOne.appendChild(fullRecipe.bgImage);
       fullRecipe.containerOne.appendChild(fullRecipe.titleContainer);
       fullRecipe.instructionContainer.appendChild(fullRecipe.instructionHeader);
-      fullRecipe.recipeInstructions(fullRecipe.instructions);
-      fullRecipe.instructionContainer.appendChild(fullRecipe.instructionOl);
+      fullRecipe.recipeInstructions(clickedRecipe);
       fullRecipe.containerTwo.appendChild(fullRecipe.instructionContainer);
-      fullRecipe.recipeIngredients(fullRecipe.ingredients);
+      fullRecipe.recipeIngredients(clickedRecipe);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientHeader);
       fullRecipe.ingredientContainer.appendChild(fullRecipe.ingredientUl);
       fullRecipe.containerTwo.appendChild(fullRecipe.ingredientContainer);
       recipeDataContainer.appendChild(fullRecipe.containerOne);
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
-      recipeData = clickedRecipe;
+      recipeData = meals[i];
       recipeControls(recipeDataContainer, recipeData);
-      recipeSection.className = 'recipe-data-container';
-      resultSection.className = 'result-container hidden';
+      window.location.hash = '#recipe?id=' + cardID;
     }
   }
-
 }
 
 /*
@@ -252,11 +264,12 @@ function renderRecipe(event, array) {
 
 keywordSearch.addEventListener('click', searchForm);
 
-homeIcon.addEventListener('click', e => {
+siteTitle.addEventListener('click', e => {
   data.dataView = 'home';
   window.location.hash = '#home?';
   featureSection.className = 'feature-container';
   resultSection.className = 'result-container hidden';
+  recipeContainer.className = 'recipe-container hidden';
 });
 
 /*
