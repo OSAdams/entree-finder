@@ -1,20 +1,41 @@
 # Entree Finder
 
-Entree Finder is a dynamic HTML, CSS, and JavaScript application that helps users find a Dinner recipe by searching the main ingredient!
-
-Users can search for a recipe using keywords. Keywords include cuisines, diets, ingredients, calories, total fats, spices, and more!
-
-I would like this to be open source as a learning experience for everyone. Feel free to contribute and share ideas!
+Entree Finder is a dynamic HTML, CSS, and JavaScript application that helps users search for an Entree Recipes!
 
 ***
 
-### Technologies Used
+## Why I built this
+
+As a former Chef, I wanted to build an application that I wish I could have utilized during heavy volume food preparation work loads.
+
+***
+
+## Technologies Used
 
 [JavaScript](https://developer.mozilla.org/en-US/docs/Web/javascript)
 
 [AJAX (HTTPie Request)](https://developer.mozilla.org/en-US/docs/Glossary/Ajax)
 
+[DOM Manipulation](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents)
+
+[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+[localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+
+[setTimeOut](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
+
+[The Meal DB](https://www.themealdb.com/)
+
 ***
+
+## Live Demo
+
+Try the application live at [https://osadams.github.io/ajax-project/](https://osadams.github.io/ajax-project/)
+
+***
+
+## Preview
+
 
 ### Current Features
 
@@ -34,9 +55,34 @@ I would like this to be open source as a learning experience for everyone. Feel 
 
 • User can view a list of their saved recipes
 
+• User can delete a recipe from their saved recipes
+
 • User can comment notes to their saved recipes
 
 ***
+
+## Development
+
+### Getting Started
+
+1. Clone the repository
+
+    ```shell
+    git clone https://github.com/Learning-Fuze/sgt-react
+    cd sgt-react
+    ```
+
+2. Install all dependencies with NPM
+
+    ```shell
+    npm install
+    ```
+
+3. Start the project. Once started you can view the application by opening http://localhost:5500/index.html#home? in your browser
+
+    ```vscode
+    Right click index.html and select Open in Live Reload
+    ```
 
 ### Work in Progress
 
@@ -46,6 +92,10 @@ I would like this to be open source as a learning experience for everyone. Feel 
 
 • Search Render Bug Fix
 
-***
-
 ### Latest Updates
+
+• Recipe Cards have been updated to render data from a different API Source
+
+• Full Recipe Pages have been updated to render data from a different API Source
+
+***
