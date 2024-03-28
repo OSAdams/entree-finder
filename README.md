@@ -51,16 +51,6 @@ Try the application live at [https://osadams.github.io/ajax-project/](https://os
 
 ***
 
-### Future Features
-
-• User can view a list of their saved recipes
-
-• User can delete a recipe from their saved recipes
-
-• User can comment notes to their saved recipes
-
-***
-
 ## Development
 
 ### Getting Started
@@ -91,6 +81,14 @@ Try the application live at [https://osadams.github.io/ajax-project/](https://os
 • CSS Styling Update
 
 • Search Render Bug Fix
+
+### Future Features
+
+• User can view a list of their saved recipes
+
+• User can delete a recipe from their saved recipes
+
+• User can comment notes to their saved recipes
 
 ### Latest Updates
 
