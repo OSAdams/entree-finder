@@ -6,6 +6,8 @@ const resultDataList = document.querySelector('.result-data-list');
 const recipeContainer = document.querySelector('.recipe-container');
 const siteTitle = document.querySelector('.site-title');
 const siteMap = document.querySelector('.site-map');
+const modalContainer = document.querySelector('.modal-container');
+const modalContent = document.querySelector('.modal-content');
 
 /*
   # Depending on the window hash, the user will be able to view and interact with
@@ -33,7 +35,7 @@ window.addEventListener('hashchange', e => {
     featureSection.className = 'feature-container';
     resultSection.className = 'result-container hidden';
     recipeContainer.className = 'recipe-container hidden';
-    siteMap.textContent = 'Full Recipe';
+    siteMap.textContent = 'Landing Page';
   }
 });
 
@@ -80,12 +82,15 @@ function windowHashString(string) {
 function searchForm(event) {
   event.preventDefault();
   const convertedString = windowHashString(searchInput.value);
+  modalContent.textContent = 'Search for your choice of plates!';
+  modalContainer.className = 'modal-container';
   searchRecipes(convertedString);
   setTimeout(() => {
     searchInput.value = '';
     window.location.hash = '#search?keyword=' + convertedString;
     featureSection.className = 'feature-container hidden';
     resultSection.className = 'result-container';
+    modalContainer.className = 'modal-container hidden';
     renderRecipeCards(data.searchData);
   }, 600);
 }
@@ -101,6 +106,13 @@ function searchForm(event) {
 function renderRecipeCards(array) {
   resultDataList.innerHTML = '';
   const { meals } = array;
+  if (!meals) {
+    const errorMessage = newElement('p', { textContent: 'Unable to find an Entree with your search string! Please, try again.' });
+    const errorTitle = newElement('h3', { textContent: 'Error! ' });
+    resultDataList.appendChild(errorTitle);
+    resultDataList.appendChild(errorMessage);
+    return;
+  }
 
   /*
     # stringSizeUpdate is a locally defined method to renderRecipeCards. This
@@ -142,6 +154,8 @@ function renderRecipeCards(array) {
     newCard.recipeContext.appendChild(newCard.recipeSourceP);
     newCard.cardContainer.appendChild(newCard.recipeContext);
     newCard.cardContainer.addEventListener('click', e => {
+      modalContainer.className = 'modal-container';
+      modalContent.textContent = 'Loading your full recipe!';
       renderRecipe(e, meals);
     });
     resultDataList.appendChild(newCard.cardContainer);
@@ -253,6 +267,7 @@ function renderRecipe(event, array) {
       recipeData = meals[i];
       recipeControls(recipeDataContainer, recipeData);
       window.location.hash = '#recipe?id=' + cardID;
+      modalContainer.className = 'modal-container hidden';
     }
   }
 }
