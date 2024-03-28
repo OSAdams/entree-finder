@@ -288,19 +288,9 @@ siteTitle.addEventListener('click', e => {
 });
 
 /*
-  # This function is used if we have a string containing special characters that
-  # will negatively impact our rendered data.
+  # recipeContorls will allow the user to save a recipe, storing the data
+  # into localStorage
 */
-
-// eslint-disable-next-line
-function removeTags(str) {
-  const error = {};
-  if (!str) {
-    error.error = 'Invalid string argument';
-    return error;
-  } else { str = str.toString(); }
-  return str.replace(/(<([^>]+)>)/ig, '');
-}
 
 function recipeControls(parent, object) {
   const actionLib = {

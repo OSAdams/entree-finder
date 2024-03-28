@@ -20,11 +20,15 @@
 </head>
 <body>
   <div class="main-container">
+
+    <!-- Static Header / Navigation -->
     <header class="navigation">
       <h1 class="site-title">Entree Finder</h1>
       <p class="site-map">Landing Page</p>
     </header>
     <main>
+
+      <!-- Landing Page / Search Feature -->
       <section class="feature-container">
         <div class="feature-components">
           <div class="search-form-container">
@@ -33,6 +37,8 @@
               <p>Use the search form below</p>
               <p>to find a recipe!</p>
             </div>
+
+            <!-- Search Form -->
             <div class="search-form-controls">
               <form class="search-form" id="search-form">
                 <p class="instruction">
@@ -48,6 +54,7 @@
         </div>
       </section>
 
+      <!-- Search Result Data Render -->
       <section class="result-container hidden">
         <div class="recipe-card-instructions">
           <h3>Please click on a card to view the full recipe</h3>
@@ -58,11 +65,14 @@
         </div>
       </section>
 
+      <!-- Full Recipe Data Render -->
       <section class="recipe-container hidden">
         <div class="recipe-data-container">
 
         </div>
       </section>
+
+      <!-- Loading Modal -->
       <section class="modal-container hidden">
         <div>
           <div>
@@ -75,6 +85,7 @@
           </div>
         </div>
       </section>
+
     </main>
   </div>
   <script src="js/data.js"></script>
