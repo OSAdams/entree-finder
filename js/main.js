@@ -15,7 +15,6 @@ const modalContent = document.querySelector('.modal-content');
 */
 
 window.addEventListener('hashchange', e => {
-  // eslint-disable-next-line
   const [page, query, value] = windowHashPage(window.location.hash);
   if (page === '#search') {
     featureSection.className = 'feature-container hidden';
@@ -25,16 +24,19 @@ window.addEventListener('hashchange', e => {
     renderRecipeCards(data.searchData);
   }
   if (page === '#recipe') {
-    featureSection.className = 'feature-container hidden';
-    resultSection.className = 'result-container hidden';
-    modalContainer.className = 'modal-container';
-    modalContent.textContent = 'Reloading previous recipe!';
-    setTimeout(() => {
-      renderRecipe(e, data.searchData, value);
-      recipeContainer.className = 'recipe-container';
-      modalContainer.className = 'modal-container hidden';
-    });
-    siteMap.textContent = 'Full Recipe';
+    if (query === 'id') {
+      setTimeout(() => {
+        renderRecipe(data.searchData, value);
+        featureSection.className = 'feature-container hidden';
+        resultSection.className = 'result-container hidden';
+        modalContainer.className = 'modal-container hidden';
+        recipeContainer.className = 'recipe-container';
+      }, 1000);
+      modalContainer.className = 'modal-container';
+      modalContent.textContent = 'Loading.. Please wait!';
+      renderRecipe(data.searchData, value);
+      siteMap.textContent = 'Full Recipe';
+    }
   }
   if (page === '#home') {
     featureSection.className = 'feature-container';
@@ -160,9 +162,7 @@ function renderRecipeCards(array) {
     newCard.recipeContext.appendChild(newCard.recipeSourceP);
     newCard.cardContainer.appendChild(newCard.recipeContext);
     newCard.cardContainer.addEventListener('click', e => {
-      modalContainer.className = 'modal-container';
-      modalContent.textContent = 'Loading your full recipe!';
-      renderRecipe(e, meals);
+      window.location.hash = 'recipe?id=' + meals[i].idMeal;
     });
     resultDataList.appendChild(newCard.cardContainer);
     resultSection.appendChild(resultDataList);
@@ -201,10 +201,10 @@ function newElement(tag, options) {
 const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
 
-function renderRecipe(event, array, rawID) {
+function renderRecipe(array, rawID) {
   document.querySelector('.recipe-data-container').innerHTML = '';
-  const cardID = rawID || event.currentTarget.getAttribute('id');
-  const meals = array;
+  const { meals } = array;
+  const cardID = rawID;
   for (let i = 0; i < meals.length; i++) {
     if (cardID === meals[i].idMeal) {
       recipeData = null;
@@ -270,8 +270,6 @@ function renderRecipe(event, array, rawID) {
       recipeDataContainer.appendChild(fullRecipe.containerTwo);
       recipeData = meals[i];
       recipeControls(recipeDataContainer, recipeData);
-      window.location.hash = '#recipe?id=' + cardID;
-      modalContainer.className = 'modal-container hidden';
     }
   }
 }
