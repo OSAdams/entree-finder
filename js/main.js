@@ -15,21 +15,28 @@ const modalContent = document.querySelector('.modal-content');
 */
 
 window.addEventListener('hashchange', e => {
-  const hash = windowHashPage(window.location.hash);
-  if (hash === '#search') {
+  // eslint-disable-next-line
+  const [page, query, value] = windowHashPage(window.location.hash);
+  if (page === '#search') {
     featureSection.className = 'feature-container hidden';
     resultSection.className = 'result-container';
     recipeContainer.className = 'recipe-container hidden';
     siteMap.textContent = 'Search Results';
     renderRecipeCards(data.searchData);
   }
-  if (hash === '#recipe') {
+  if (page === '#recipe') {
     featureSection.className = 'feature-container hidden';
     resultSection.className = 'result-container hidden';
-    recipeContainer.className = 'recipe-container';
+    modalContainer.className = 'modal-container';
+    modalContent.textContent = 'Reloading previous recipe!';
+    setTimeout(() => {
+      renderRecipe(e, data.searchData, value);
+      recipeContainer.className = 'recipe-container';
+      modalContainer.className = 'modal-container hidden';
+    });
     siteMap.textContent = 'Full Recipe';
   }
-  if (hash === '#home') {
+  if (page === '#home') {
     featureSection.className = 'feature-container';
     resultSection.className = 'result-container hidden';
     recipeContainer.className = 'recipe-container hidden';
@@ -64,10 +71,10 @@ function searchRecipes(keyword) {
 */
 
 function windowHashPage(string) {
-  let hash = null;
-  hash = string.split('?');
-  const [page] = hash;
-  return page;
+  const [page, content] = string.split('?');
+  const [query, value] = content.split('=');
+  const windowHash = [page, query, value];
+  return windowHash;
 }
 
 /*
@@ -194,9 +201,9 @@ function newElement(tag, options) {
 const recipeDataContainer = document.querySelector('.recipe-data-container');
 let recipeData = null;
 
-function renderRecipe(event, array) {
+function renderRecipe(event, array, rawID) {
   document.querySelector('.recipe-data-container').innerHTML = '';
-  const cardID = event.currentTarget.getAttribute('id');
+  const cardID = rawID || event.currentTarget.getAttribute('id');
   const meals = array;
   for (let i = 0; i < meals.length; i++) {
     if (cardID === meals[i].idMeal) {
