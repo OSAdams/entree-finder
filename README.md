@@ -4,7 +4,7 @@ Entree Finder is a dynamic HTML, CSS, and JavaScript application that helps user
 
 ## Why I built this
 
-As a former Chef, I wanted to build an application that I wish I could have utilized during heavy volume food preparation work loads.
+As a former Chef, I wanted to create an easy to use application with straight forward recipe measurements and instructions.
 
 ***
 
@@ -28,15 +28,15 @@ As a former Chef, I wanted to build an application that I wish I could have util
 
 ## Live Demo
 
-Try the application live at [https://osadams.github.io/ajax-project/](https://osadams.github.io/ajax-project/)
+Try the application live at [https://osadams.github.io/entree-finder/](https://osadams.github.io/entree-finder/)
 
 ***
 
 ## Preview
 
-![readme-preview-image-1](https://github.com/OSAdams/ajax-project/assets/76730244/cb62cc60-8f65-494c-a8a3-aa73388d2f3a)
+![readme-preview-image-1](https://github.com/OSAdams/entree-finder/assets/76730244/cb62cc60-8f65-494c-a8a3-aa73388d2f3a)
 
-![readme-preview-image-2](https://github.com/OSAdams/ajax-project/assets/76730244/2bf69439-7894-4e6d-a3b5-9849b207c39a)
+![readme-preview-image-2](https://github.com/OSAdams/entree-finder/assets/76730244/2bf69439-7894-4e6d-a3b5-9849b207c39a)
 
 ### Current Features
 
