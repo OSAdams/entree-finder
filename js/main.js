@@ -21,12 +21,12 @@ window.addEventListener('hashchange', e => {
     resultSection.className = 'result-container';
     recipeContainer.className = 'recipe-container hidden';
     siteMap.textContent = 'Search Results';
+    data.dataView = 'search';
     renderRecipeCards(data.searchData);
   }
   if (page === '#recipe') {
     if (query === 'id') {
       setTimeout(() => {
-        renderRecipe(data.searchData, value);
         featureSection.className = 'feature-container hidden';
         resultSection.className = 'result-container hidden';
         modalContainer.className = 'modal-container hidden';
@@ -34,6 +34,7 @@ window.addEventListener('hashchange', e => {
       }, 1000);
       modalContainer.className = 'modal-container';
       modalContent.textContent = 'Loading.. Please wait!';
+      data.dataView = 'recipe';
       renderRecipe(data.searchData, value);
       siteMap.textContent = 'Full Recipe';
     }
@@ -42,6 +43,7 @@ window.addEventListener('hashchange', e => {
     featureSection.className = 'feature-container';
     resultSection.className = 'result-container hidden';
     recipeContainer.className = 'recipe-container hidden';
+    data.dataView = 'home';
     siteMap.textContent = 'Landing Page';
   }
 });

@@ -67,9 +67,10 @@ Try the application live at [https://osadams.github.io/entree-finder/](https://o
 
     ```shell
     npm install
+    npm run-script husky
     ```
 
-3. Start the project. Once started you can view the application by pasting the below link into the address bar
+3. Start the project. Once started you can view the application by pasting the below link into the address bar. You can also load the html document by right clicking and selecting 'Open in Live Reload'
 
     ```shell
     http://localhost:5500/index.html#home?
