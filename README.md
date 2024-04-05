@@ -34,9 +34,9 @@ Try the application live at [https://osadams.github.io/entree-finder/](https://o
 
 ## Preview
 
-![readme-preview-image-1](https://github.com/OSAdams/entree-finder/assets/76730244/cb62cc60-8f65-494c-a8a3-aa73388d2f3a)
+<img src="https://github.com/OSAdams/entree-finder/assets/76730244/cb62cc60-8f65-494c-a8a3-aa73388d2f3a" width=25% height=25%>
 
-![readme-preview-image-2](https://github.com/OSAdams/entree-finder/assets/76730244/2bf69439-7894-4e6d-a3b5-9849b207c39a)
+<img src="https://github.com/OSAdams/entree-finder/assets/76730244/2bf69439-7894-4e6d-a3b5-9849b207c39a" width=50% height=50%>
 
 ### Current Features
 
