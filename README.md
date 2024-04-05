@@ -73,16 +73,12 @@ Try the application live at [https://osadams.github.io/entree-finder/](https://o
 3. Start the project. Once started you can view the application by pasting the below link into the address bar. You can also load the html document by right clicking and selecting 'Open in Live Reload'
 
     ```shell
-    http://localhost:5500/index.html#home?
+    http://localhost:5500/index.html#home
     ```
 
 ### Work in Progress
 
-• Application Readme
-
-• CSS Styling Update
-
-• Search Render Bug Fix
+• Getting Started Instructions Update
 
 ### Future Features
 
@@ -90,12 +86,14 @@ Try the application live at [https://osadams.github.io/entree-finder/](https://o
 
 • User can delete a recipe from their saved recipes
 
-• User can comment notes to their saved recipes
+• User can edit saved recipes
 
 ### Latest Updates
 
-• Recipe Cards have been updated to render data from a different API Source
+• Loading Modal displayed during server communications
 
-• Full Recipe Pages have been updated to render data from a different API Source
+• Utilize window hash event listeners to manipulate the DOM for a responsive user interaction
+
+• Update responsive styling for multiple devices
 
 ***
